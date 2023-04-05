@@ -3,14 +3,15 @@
 
   let kitty = 0;
   let dsll = 0;
-  const IP = "https://rich-system.team-freeman.com";
+  // const URL = "https://rich-system.team-freeman.com";
+  const URL = "http://localhost:19000";
 
   function fetchData() {
-    fetch(`${IP}/funds`)
+    fetch(`${URL}/funds`)
       .then((response) => response.json())
       .then((data) => (kitty = data.funds))
       .catch(() => (kitty = 35505));
-    fetch(`${IP}/dsll`)
+    fetch(`${URL}/activity`)
       .then((response) => response.json())
       .then((data) => (dsll = data.days))
       .catch(() => (dsll = 35505));
@@ -23,7 +24,7 @@
 
 <main>
   <h1>£{kitty}</h1>
-  <h2>{dsll} days streak</h2>
+  <h2>{dsll} day streak</h2>
   <img
     src={`/${Math.floor(Math.random() * (9 - 1 + 1) + 1)}.gif`}
     alt="making money gif with looney tunes"
