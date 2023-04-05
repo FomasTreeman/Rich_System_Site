@@ -4,7 +4,8 @@
   let totalProfit = 0;
   let bestStreak = 0;
 
-  const URL = "http://localhost:19000";
+  const URL = "https://rich-system.team-freeman.com";
+  // const URL = "http://localhost:19000";
 
   function fetchData() {
     fetch(`${URL}/funds`)
@@ -27,7 +28,7 @@
 
 <main>
   <p>best streak: {bestStreak}</p>
-  <p>todays profit so far: £{todaysProfit}</p>
+  <p>todays profit: £{todaysProfit}</p>
   <p>total profit: £{totalProfit}</p>
   <br />
   <p>in works</p>
