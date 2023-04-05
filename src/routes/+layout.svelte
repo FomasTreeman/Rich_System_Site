@@ -7,6 +7,7 @@
 
 <style>
   header {
+    margin-block: 1.5rem;
     display: flex;
     justify-content: space-around;
     gap: 2rem;

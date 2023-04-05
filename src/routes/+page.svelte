@@ -24,7 +24,10 @@
 <main>
   <h1>£{kitty}</h1>
   <h2>{dsll} days streak</h2>
-  <img src="/giphy.gif" alt="making money gif with looney tunes" />
+  <img
+    src={`/${Math.floor(Math.random() * (9 - 1 + 1) + 1)}.gif`}
+    alt="making money gif with looney tunes"
+  />
 </main>
 
 <style>
