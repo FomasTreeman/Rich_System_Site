@@ -18,7 +18,6 @@
       .then((response) => response.json())
       .then((data) => {
         kitty = data.funds;
-        todaysProfit = data.today;
         totalProfit = data.total;
       })
       .catch(() => (kitty = 35505));
@@ -32,9 +31,32 @@
       .catch(() => (dsll = 35505));
   }
 
+  function calculateRed(price) {
+    if (price >= 110) {
+      return Math.floor(255 - ((price - 20) * 255) / 180);
+    } else return 255;
+  }
+
+  function calculateBlue(price) {
+    if (price <= 110) {
+      return Math.floor(((price - 20) * 255) / 180);
+    } else return 255;
+  }
+
   onMount(() => {
     fetchData();
   });
+
+  $: todaysProfit =
+    Math.floor(
+      todaysSettled.reduce((acc, curr) => {
+        return acc + curr.profit;
+      }, 0) * 100
+    ) / 100;
+
+  setInterval(() => {
+    fetchData();
+  }, 10000);
 </script>
 
 <main class="flex col">
@@ -62,9 +84,16 @@
           <td>{time}</td>
           <td>{selection}</td>
           <td>{side}</td>
-          <td>£{price}</td>
+          <td
+            style="background-color: rgba({calculateRed(price)}, 
+            {calculateBlue(price)}, 1, 0.3)">{price}</td
+          >
           <td>£{Math.floor(liability * 100) / 100}</td>
-          <td>£{profit}</td>
+          {#if profit < 0}
+            <td style="background-color: rgba(240, 1, 1, 0.3)">£{profit}</td>
+          {:else}
+            <td style="background-color: rgba(1, 240, 1, 0.3)">£{profit}</td>
+          {/if}
         </tr>
       {/each}
     </table>
