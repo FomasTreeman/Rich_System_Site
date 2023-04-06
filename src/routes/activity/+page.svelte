@@ -3,9 +3,11 @@
 
   let toggle = false;
 
+  let kitty = 0;
   let todaysProfit = 0;
   let totalProfit = 0;
   let bestStreak = 0;
+  let bestKitty = 0;
   let todaysSettled = [];
 
   const URL = "https://rich-system.team-freeman.com";
@@ -15,6 +17,7 @@
     fetch(`${URL}/funds`)
       .then((response) => response.json())
       .then((data) => {
+        kitty = data.funds;
         todaysProfit = data.today;
         totalProfit = data.total;
       })
@@ -24,6 +27,7 @@
       .then((data) => {
         bestStreak = data.best;
         todaysSettled = data.settled;
+        bestKitty = data.bestKitty;
       })
       .catch(() => (dsll = 35505));
   }
@@ -65,13 +69,29 @@
       {/each}
     </table>
   {/if}
-  <h3>best streak: {bestStreak}</h3>
-  <h3>total profit: £{totalProfit}</h3>
+  <section class="flex wrap">
+    <li>
+      <p>🔥</p>
+      <h3>{bestStreak}</h3>
+    </li>
+    <li>
+      <p>best pussy:</p>
+      <h3>£{bestKitty}</h3>
+    </li>
+    <li>
+      <p>range from best:</p>
+      <h3>£{Math.floor(kitty - bestKitty)}</h3>
+    </li>
+    <li>
+      <p>overall profit:</p>
+      <h3>£{totalProfit}</h3>
+    </li>
+  </section>
   <br />
-  <h2>in works</h2>
+  <!-- <h2>in works</h2> -->
+  <br />
   <img src="/work.gif" alt="making money gif with looney tunes" />
-  <hr style="width: 100%" />
-  <b>horses in action</b>
+  <!-- <b>horses in action</b> -->
 </main>
 
 <style>
@@ -85,8 +105,32 @@
     flex-direction: column;
   }
 
-  .space-around {
+  /* .space-around {
     justify-content: space-around;
+  } */
+
+  .wrap {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  section {
+    margin-top: 2rem;
+  }
+
+  li {
+    list-style: none;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid grey;
+  }
+
+  h3 {
+    margin-top: auto;
+    margin-bottom: 0px;
   }
 
   h1,

@@ -35,7 +35,7 @@
 <style>
   header {
     margin-block: 1.5rem;
-    margin-left: 1.5rem;
+    margin-inline: 1.5rem;
     display: flex;
     align-items: center;
     gap: 2rem;
