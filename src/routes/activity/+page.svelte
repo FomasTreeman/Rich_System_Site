@@ -31,13 +31,12 @@
   onMount(() => {
     fetchData();
   });
-
-  // $: console.log(todaysSettled);
 </script>
 
 <main class="flex col">
   <p>todays profit:</p>
   <h1>£{todaysProfit}</h1>
+
   <button on:click={() => (toggle = !toggle)}> SETTLED BETS </button>
   {#if toggle}
     <table>
@@ -84,6 +83,10 @@
 
   .col {
     flex-direction: column;
+  }
+
+  .space-around {
+    justify-content: space-around;
   }
 
   h1,
