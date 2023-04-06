@@ -3,6 +3,7 @@
 
   let kitty = 0;
   let dsll = 0;
+
   const URL = "https://rich-system.team-freeman.com";
   // const URL = "http://localhost:19000";
 
@@ -20,18 +21,32 @@
   onMount(() => {
     fetchData();
   });
+
+  setInterval(() => {
+    fetchData();
+  }, 10000);
 </script>
 
 <main>
   <h1>£{kitty}</h1>
   <h2>{dsll} day streak</h2>
   <img
-    src={`/${Math.floor(Math.random() * (9 - 1 + 1) + 1)}.gif`}
+    src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
     alt="making money gif with looney tunes"
   />
 </main>
 
 <style>
+  :global(button) {
+    border-radius: 1rem;
+    background-color: grey;
+    color: greenyellow;
+    border: none;
+    padding-block: 0.5rem;
+    padding-inline: 1rem;
+    width: fit-content;
+  }
+
   :root {
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     line-height: 1.5;

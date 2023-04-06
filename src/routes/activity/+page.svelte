@@ -1,11 +1,15 @@
 <script>
   import { onMount } from "svelte";
+
+  let toggle = false;
+
   let todaysProfit = 0;
   let totalProfit = 0;
   let bestStreak = 0;
+  let todaysSettled = [];
 
-  const URL = "https://rich-system.team-freeman.com";
-  // const URL = "http://localhost:19000";
+  // const URL = "https://rich-system.team-freeman.com";
+  const URL = "http://localhost:19000";
 
   function fetchData() {
     fetch(`${URL}/funds`)
@@ -17,38 +21,101 @@
       .catch(() => (kitty = 35505));
     fetch(`${URL}/activity`)
       .then((response) => response.json())
-      .then((data) => (bestStreak = data.best))
+      .then((data) => {
+        bestStreak = data.best;
+        todaysSettled = data.settled;
+      })
       .catch(() => (dsll = 35505));
   }
 
   onMount(() => {
     fetchData();
   });
+
+  // $: console.log(todaysSettled);
 </script>
 
-<main>
-  <p>best streak: {bestStreak}</p>
-  <p>todays profit: £{todaysProfit}</p>
-  <p>total profit: £{totalProfit}</p>
+<main class="flex col">
+  <p>todays profit:</p>
+  <h1>£{todaysProfit}</h1>
+  <button on:click={() => (toggle = !toggle)}> SETTLED BETS </button>
+  {#if toggle}
+    <table>
+      <tr>
+        <th>time</th>
+        <th>horse</th>
+        <th>side</th>
+        <th>odds</th>
+        <th>risk</th>
+        <th>profit</th>
+      </tr>
+      {#if todaysSettled.length === 0}
+        <tr>
+          <td colspan="6">no settled bets</td>
+        </tr>
+      {/if}
+      {#each todaysSettled as { time, selection, side, odds, liability, profit }}
+        <tr>
+          <td>{time}</td>
+          <td>{selection}</td>
+          <td>{side}</td>
+          <td>{odds}</td>
+          <td>{liability}</td>
+          <td>{profit}</td>
+        </tr>
+      {/each}
+    </table>
+  {/if}
+  <h3>best streak: {bestStreak}</h3>
+  <h3>total profit: £{totalProfit}</h3>
   <br />
-  <p>in works</p>
+  <h2>in works</h2>
   <img src="/work.gif" alt="making money gif with looney tunes" />
   <hr style="width: 100%" />
-  <p>horses in action</p>
-  <p>todays settled</p>
+  <b>horses in action</b>
 </main>
 
 <style>
+  .flex {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .col {
+    flex-direction: column;
+  }
+
+  h1,
+  p {
+    text-align: center;
+    margin: 0px;
+  }
+
   img {
     max-width: 100%;
   }
 
-  main {
-    display: flex;
-    flex-direction: column;
+  button {
+    margin-inline: auto;
+    margin-block: 1rem;
   }
 
-  p {
-    font-size: 1.5rem;
+  table {
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  th,
+  tr {
+    font-size: medium;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    overflow: hidden;
   }
 </style>
