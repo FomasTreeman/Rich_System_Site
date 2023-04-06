@@ -87,7 +87,7 @@
           <td>{side}</td>
           <td
             style="background-color: rgba({calculateRed(price)}, 
-            {calculateGreen(price)}, 1, 1)">{price}</td
+            {calculateGreen(price)}, 1, 0.4)">{price}</td
           >
           <td>£{Math.floor(liability * 100) / 100}</td>
           {#if profit < 0}
