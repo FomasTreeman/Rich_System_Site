@@ -10,8 +10,8 @@
   let bestKitty = 0;
   let todaysSettled = [];
 
-  const URL = "https://rich-system.team-freeman.com";
-  // const URL = "http://localhost:19000";
+  // const URL = "https://rich-system.team-freeman.com";
+  const URL = "http://localhost:19000";
 
   function fetchData() {
     fetch(`${URL}/funds`)
@@ -57,14 +57,14 @@
           <td colspan="6">no settled bets</td>
         </tr>
       {/if}
-      {#each todaysSettled as { time, selection, side, odds, liability, profit }}
+      {#each todaysSettled as { time, selection, side, price, liability, profit }}
         <tr>
           <td>{time}</td>
           <td>{selection}</td>
           <td>{side}</td>
-          <td>{odds}</td>
-          <td>{liability}</td>
-          <td>{profit}</td>
+          <td>£{price}</td>
+          <td>£{Math.floor(liability * 100) / 100}</td>
+          <td>£{profit}</td>
         </tr>
       {/each}
     </table>
