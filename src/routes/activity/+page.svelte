@@ -8,8 +8,8 @@
   let bestStreak = 0;
   let todaysSettled = [];
 
-  // const URL = "https://rich-system.team-freeman.com";
-  const URL = "http://localhost:19000";
+  const URL = "https://rich-system.team-freeman.com";
+  // const URL = "http://localhost:19000";
 
   function fetchData() {
     fetch(`${URL}/funds`)
