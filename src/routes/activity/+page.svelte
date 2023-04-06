@@ -32,14 +32,15 @@
   }
 
   function calculateRed(price) {
-    if (price >= 110) {
-      return Math.floor(255 - ((price - 20) * 255) / 180);
+    if (price > 110) {
+      // return 10;
+      return 255 - (Math.floor((price - 20) * (255 / 90)) - 255);
     } else return 255;
   }
 
-  function calculateBlue(price) {
-    if (price <= 110) {
-      return Math.floor(((price - 20) * 255) / 180);
+  function calculateGreen(price) {
+    if (price < 110) {
+      return Math.floor((price - 20) * (255 / 90));
     } else return 255;
   }
 
@@ -86,7 +87,7 @@
           <td>{side}</td>
           <td
             style="background-color: rgba({calculateRed(price)}, 
-            {calculateBlue(price)}, 1, 0.3)">{price}</td
+            {calculateGreen(price)}, 1, 1)">{price}</td
           >
           <td>£{Math.floor(liability * 100) / 100}</td>
           {#if profit < 0}
