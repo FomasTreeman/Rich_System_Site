@@ -2,7 +2,7 @@
   import { onMount } from "svelte";
 
   let nextRace = "";
-
+  let toggle = false;
   const URL = "https://rich-system.team-freeman.com";
 
   // const URL = "http://localhost:19000";
@@ -24,6 +24,12 @@
 <header>
   <a href="/"> HOME </a>
   <a href="/activity"> ACTIVITY </a>
+  <button on:click={() => (toggle = !toggle)}> 🔽 </button>
+  {#if toggle}
+    <ul>
+      <a href="/graph"> GRAPH </a>
+    </ul>
+  {/if}
   <div class="top-right">
     <p>next race</p>
     <b>{nextRace}</b>
@@ -39,6 +45,7 @@
     display: flex;
     align-items: center;
     gap: 2rem;
+    position: relative;
   }
 
   a {
@@ -56,8 +63,27 @@
     margin-left: auto;
   }
 
+  ul {
+    position: absolute;
+    background-color: rgba(28, 26, 26, 0.3);
+    top: 100%;
+    left: -1.5rem;
+    width: 100%;
+    border: 3px solid black;
+    border-radius: 1rem;
+    display: flex;
+    padding-block: 0.5rem;
+  }
+
   p,
   b {
     margin: 0%;
+  }
+
+  button {
+    padding: 0px;
+    background-color: transparent;
+    border-radius: 0px;
+    box-shadow: none;
   }
 </style>

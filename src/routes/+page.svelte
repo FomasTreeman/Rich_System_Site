@@ -18,6 +18,11 @@
       .catch(() => (dsll = 35505));
   }
 
+  function twoDP(num) {
+    const two = Math.floor(num * 100) / 100;
+    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  }
+
   onMount(() => {
     fetchData();
   });
@@ -28,7 +33,7 @@
 </script>
 
 <main>
-  <h1>£{kitty}</h1>
+  <h1>£{twoDP(kitty)}</h1>
   <h2>{dsll} day streak</h2>
   <img
     src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
