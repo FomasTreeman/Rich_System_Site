@@ -129,7 +129,7 @@
     <li class="lia">
       <p>todays avg liability</p>
       <h3>
-        £{Object.keys(todaysSettled).length < 0
+        £{Object.keys(todaysSettled).length > 0
           ? twoDP(totalLiability / Object.keys(todaysSettled).length)
           : 0}
       </h3>
