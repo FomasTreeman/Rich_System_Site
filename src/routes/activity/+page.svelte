@@ -113,7 +113,7 @@
     </li>
     <li class="return">
       <p>ROI</p>
-      <h3>%{(kitty / allTimeLiability).toString().substring(0, 6)}</h3>
+      <h3>%{(totalProfit / allTimeLiability).toString().substring(0, 6)}</h3>
     </li>
     <li class="special return">
       <p>weekly: £🧑‍💻</p>
