@@ -87,21 +87,13 @@
     >
       SETTLED BETS
     </button>
-    <button
-      style="background-color: {toggleB ? 'inherit' : 'grey'}"
-      on:click={() => (toggleB = !toggleB)}
-    >
-      OPEN BETS
-    </button>
   </div>
   {#if toggleA}
     <Table results={todaysSettled} />
   {/if}
-  {#if toggleB}
-    <!-- table of open bets -->
+  {#if openBets.length > 0}
     <table>
       <tr>
-        <th>time</th>
         <th>selection</th>
         <th>side</th>
         <th>price</th>
@@ -109,7 +101,6 @@
       </tr>
       {#each openBets as bet}
         <tr>
-          <td>{bet.time}</td>
           <td>{bet.selection}</td>
           <td>{bet.side}</td>
           <td>{bet.price}</td>
