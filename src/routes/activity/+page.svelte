@@ -73,7 +73,9 @@
     £{twoDP(todaysProfit)}
   </h1>
   <h2>
-    %{todaysProfit != 0 ? (todaysProfit / (kitty - todaysProfit)) * 100 : 0}
+    %{twoDP(
+      todaysProfit != 0 ? (todaysProfit / (kitty - todaysProfit)) * 100 : 0
+    )}
   </h2>
   <button
     style="background-color: {toggle ? 'inherit' : 'grey'}"
