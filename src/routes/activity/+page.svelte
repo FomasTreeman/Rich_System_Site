@@ -2,7 +2,8 @@
   import { onMount } from "svelte";
   import Table from "../Table.svelte";
 
-  let toggle = false;
+  let toggleA = false;
+  let toggleB = false;
 
   let kitty = 0;
   let todaysProfit = 0;
@@ -10,6 +11,7 @@
   let bestStreak = 0;
   let bestKitty = 0;
   let todaysSettled = [];
+  let openBets = [];
   let totalLiability = 0;
   let lastRace = "";
   let allTimeLiability = 0;
@@ -32,6 +34,7 @@
       .then((data) => {
         bestStreak = data.best;
         todaysSettled = data.settled;
+        openBets = data.open;
         bestKitty = data.bestKitty;
         lastRace = data.last;
         allTimeLiability = data.atl;
@@ -77,14 +80,25 @@
       todaysProfit != 0 ? (todaysProfit / (kitty - todaysProfit)) * 100 : 0
     )}
   </h2>
-  <button
-    style="background-color: {toggle ? 'inherit' : 'grey'}"
-    on:click={() => (toggle = !toggle)}
-  >
-    SETTLED BETS
-  </button>
-  {#if toggle}
+  <div class="flex">
+    <button
+      style="background-color: {toggleA ? 'inherit' : 'grey'}"
+      on:click={() => (toggleA = !toggleA)}
+    >
+      SETTLED BETS
+    </button>
+    <button
+      style="background-color: {toggleB ? 'inherit' : 'grey'}"
+      on:click={() => (toggleB = !toggleB)}
+    >
+      OPEN BETS
+    </button>
+  </div>
+  {#if toggleA}
     <Table results={todaysSettled} />
+  {/if}
+  {#if toggleB}
+    <Table results={openBets} />
   {/if}
   <section class="flex wrap">
     <li class="general">
