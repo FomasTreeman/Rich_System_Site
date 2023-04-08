@@ -28,6 +28,7 @@
   {#if toggle}
     <ul>
       <a href="/graph"> GRAPH </a>
+      <a href="/history"> HISTORY </a>
     </ul>
   {/if}
   <div class="top-right">
@@ -65,13 +66,15 @@
 
   ul {
     position: absolute;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
     background-color: rgba(28, 26, 26, 0.3);
     top: 100%;
     left: -1.5rem;
     width: 100%;
     border: 3px solid black;
     border-radius: 1rem;
-    display: flex;
     padding-block: 0.5rem;
   }
 

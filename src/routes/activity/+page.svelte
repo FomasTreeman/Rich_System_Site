@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import Table from "../Table.svelte";
 
   let toggle = false;
 
@@ -15,8 +16,8 @@
   let monthlyAVG = 0;
   let dailyAVG = 0;
 
-  const URL = "https://rich-system.team-freeman.com";
-  // const URL = "http://localhost:19000";
+  // const URL = "https://rich-system.team-freeman.com";
+  const URL = "http://localhost:19000";
 
   function fetchData() {
     fetch(`${URL}/funds`)
@@ -34,23 +35,14 @@
         bestKitty = data.bestKitty;
         lastRace = data.last;
         allTimeLiability = data.atl;
-        monthlyAVG = data.monthlyAVG;
-        dailyAVG = data.dailyAVG;
+        monthlyAVG =
+          Object.values(data.monthly).reduce((a, b) => a + b, 0) /
+          Object.keys(data.monthly).length;
+        dailyAVG =
+          Object.values(data.daily).reduce((a, b) => a + b, 0) /
+          Object.keys(data.daily).length;
       })
       .catch(console.log);
-  }
-
-  function calculateRed(price) {
-    if (price > 110) {
-      // return 10;
-      return 255 - (Math.floor((price - 20) * (255 / 90)) - 255);
-    } else return 255;
-  }
-
-  function calculateGreen(price) {
-    if (price < 110) {
-      return Math.floor((price - 20) * (255 / 90));
-    } else return 255;
   }
 
   function twoDP(num, comma = true) {
@@ -77,42 +69,18 @@
 
 <main class="flex col">
   <p>todays 🫰💸</p>
-  <h1>£{twoDP(todaysProfit)}</h1>
-
-  <button on:click={() => (toggle = !toggle)}> SETTLED BETS </button>
+  <h1>
+    £{twoDP(todaysProfit)}
+  </h1>
+  <h2>%{todaysProfit != 0 ? kitty - todaysProfit / todaysProfit : 0}</h2>
+  <button
+    style="background-color: {toggle ? 'inherit' : 'grey'}"
+    on:click={() => (toggle = !toggle)}
+  >
+    SETTLED BETS
+  </button>
   {#if toggle}
-    <table>
-      <tr>
-        <th>time</th>
-        <th>horse</th>
-        <th>side</th>
-        <th>odds</th>
-        <th>risk</th>
-        <th>profit</th>
-      </tr>
-      {#if todaysSettled.length === 0}
-        <tr>
-          <td colspan="6">no settled bets</td>
-        </tr>
-      {/if}
-      {#each todaysSettled as { time, selection, side, price, liability, profit }}
-        <tr>
-          <td>{time}</td>
-          <td>{selection}</td>
-          <td>{side}</td>
-          <td
-            style="background-color: rgba({calculateRed(price)}, 
-            {calculateGreen(price)}, 1, 0.4)">{price}</td
-          >
-          <td>£{twoDP(liability)}</td>
-          {#if profit < 0}
-            <td style="background-color: rgba(240, 1, 1, 0.3)">£{profit}</td>
-          {:else}
-            <td style="background-color: rgba(1, 240, 1, 0.3)">£{profit}</td>
-          {/if}
-        </tr>
-      {/each}
-    </table>
+    <Table results={todaysSettled} />
   {/if}
   <section class="flex wrap">
     <li class="general">
@@ -122,6 +90,10 @@
     <li class="general">
       <p>🔥</p>
       <h3>{bestStreak}</h3>
+    </li>
+    <li class="general">
+      <p>avg 🔥</p>
+      <h3>🧑‍💻</h3>
     </li>
     <li class="general">
       <p>final race</p>
@@ -141,7 +113,7 @@
     </li>
     <li class="return">
       <p>ROI</p>
-      <h3>👨‍💻</h3>
+      <h3>%{(kitty / allTimeLiability).toString().substring(0, 6)}</h3>
     </li>
     <li class="special return">
       <p>weekly: £🧑‍💻</p>
@@ -149,8 +121,12 @@
       <p>daily: £{twoDP(dailyAVG)}</p>
     </li>
     <li class="lia">
-      <p>todays liability</p>
-      <h3>£{twoDP(totalLiability / Object.keys(todaysSettled).length)}</h3>
+      <p>todays avg liability</p>
+      <h3>
+        £{Object.keys(todaysSettled).length < 0
+          ? twoDP(totalLiability / Object.keys(todaysSettled).length)
+          : 0}
+      </h3>
     </li>
     <li class="lia">
       <p>todays liability total</p>
@@ -245,13 +221,10 @@
   }
 
   h1,
+  h2,
   p {
     text-align: center;
     margin: 0px;
-  }
-
-  img {
-    max-width: 100%;
   }
 
   button {
@@ -259,21 +232,7 @@
     margin-block: 1rem;
   }
 
-  table {
-    width: 100%;
-    table-layout: fixed;
-  }
-
-  th,
-  tr {
-    font-size: medium;
-  }
-
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    overflow: hidden;
+  img {
+    max-width: 100%;
   }
 </style>
