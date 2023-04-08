@@ -54,11 +54,6 @@
 </table>
 
 <style>
-  button {
-    margin-inline: auto;
-    margin-block: 1rem;
-  }
-
   table {
     width: 100%;
     table-layout: fixed;
