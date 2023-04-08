@@ -98,7 +98,25 @@
     <Table results={todaysSettled} />
   {/if}
   {#if toggleB}
-    <Table results={openBets} />
+    <!-- table of open bets -->
+    <table>
+      <tr>
+        <th>time</th>
+        <th>selection</th>
+        <th>side</th>
+        <th>price</th>
+        <th>size</th>
+      </tr>
+      {#each openBets as bet}
+        <tr>
+          <td>{bet.time}</td>
+          <td>{bet.selection}</td>
+          <td>{bet.side}</td>
+          <td>{bet.price}</td>
+          <td>{bet.size}</td>
+        </tr>
+      {/each}
+    </table>
   {/if}
   <section class="flex wrap">
     <li class="general">

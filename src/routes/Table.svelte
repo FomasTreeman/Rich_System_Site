@@ -52,23 +52,3 @@
     </tr>
   {/each}
 </table>
-
-<style>
-  table {
-    width: 100%;
-    table-layout: fixed;
-  }
-
-  th,
-  tr {
-    font-size: medium;
-  }
-
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    overflow: hidden;
-  }
-</style>
