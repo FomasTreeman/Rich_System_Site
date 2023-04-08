@@ -72,7 +72,9 @@
   <h1>
     £{twoDP(todaysProfit)}
   </h1>
-  <h2>%{todaysProfit != 0 ? kitty - todaysProfit / todaysProfit : 0}</h2>
+  <h2>
+    %{todaysProfit != 0 ? (todaysProfit / (kitty - todaysProfit)) * 100 : 0}
+  </h2>
   <button
     style="background-color: {toggle ? 'inherit' : 'grey'}"
     on:click={() => (toggle = !toggle)}
@@ -113,7 +115,9 @@
     </li>
     <li class="return">
       <p>ROI</p>
-      <h3>%{(totalProfit / allTimeLiability).toString().substring(0, 6)}</h3>
+      <h3>
+        %{((totalProfit / allTimeLiability) * 100).toString().substring(0, 6)}
+      </h3>
     </li>
     <li class="special return">
       <p>weekly: £🧑‍💻</p>
