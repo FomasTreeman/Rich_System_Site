@@ -3,7 +3,6 @@
   import Table from "../Table.svelte";
 
   let toggleA = false;
-  let toggleB = false;
 
   let kitty = 0;
   let todaysProfit = 0;
@@ -22,16 +21,11 @@
   // const URL = "http://localhost:19000";
 
   function fetchData() {
-    fetch(`${URL}/funds`)
+    fetch(`${URL}/activity`)
       .then((response) => response.json())
       .then((data) => {
         kitty = data.funds;
         totalProfit = data.total;
-      })
-      .catch(() => (kitty = 99999));
-    fetch(`${URL}/activity`)
-      .then((response) => response.json())
-      .then((data) => {
         bestStreak = data.best;
         todaysSettled = data.settled;
         openBets = data.open;

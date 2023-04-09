@@ -8,14 +8,16 @@
   // const URL = "http://localhost:19000";
 
   function fetchData() {
-    fetch(`${URL}/funds`)
-      .then((response) => response.json())
-      .then((data) => (kitty = data.funds))
-      .catch(() => (kitty = 35505));
     fetch(`${URL}/activity`)
       .then((response) => response.json())
-      .then((data) => (dsll = data.days))
-      .catch(() => (dsll = 35505));
+      .then((data) => {
+        dsll = data.days;
+        kitty = data.funds;
+      })
+      .catch(() => {
+        dsll = 99999;
+        kitty = 99999;
+      });
   }
 
   function twoDP(num) {
@@ -27,9 +29,9 @@
     fetchData();
   });
 
-  setInterval(() => {
-    fetchData();
-  }, 10000);
+  // setInterval(() => {
+  //   fetchData();
+  // }, 10000);
 </script>
 
 <main>

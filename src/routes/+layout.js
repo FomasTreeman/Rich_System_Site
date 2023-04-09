@@ -1,14 +1,9 @@
 function fetchData() {
-  fetch(`${URL}/funds`)
+  fetch(`${URL}/activity`)
     .then((response) => response.json())
     .then((data) => {
       kitty = data.funds;
       totalProfit = data.total;
-    })
-    .catch(() => (kitty = 99999));
-  fetch(`${URL}/activity`)
-    .then((response) => response.json())
-    .then((data) => {
       bestStreak = data.best;
       todaysSettled = data.settled;
       openBets = data.open;
@@ -26,7 +21,7 @@ function fetchData() {
 }
 
 export const load = async () => {
-  const response = await fetch("https://pokeapi.co/api/v2/pokemon?limit=151");
+  const response = await fetchData();
   const data = await response.json();
 
   return {

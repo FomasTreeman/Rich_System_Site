@@ -56,6 +56,19 @@
   });
 </script>
 
+<nav>
+  <button>daily</button>
+  <button>weekly</button>
+  <button>monthly</button>
+</nav>
 <div style="height: 50vh">
   <canvas id="myChart" />
 </div>
+
+<style>
+  nav {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 1rem;
+  }
+</style>
