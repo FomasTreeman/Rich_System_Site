@@ -27,6 +27,7 @@
   <button on:click={() => (toggle = !toggle)}> 🔽 </button>
   {#if toggle}
     <ul>
+      <a href="/woman"> WOMAN </a>
       <a href="/graph"> GRAPH </a>
       <a href="/history"> HISTORY </a>
     </ul>
