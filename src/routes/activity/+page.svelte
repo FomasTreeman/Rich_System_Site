@@ -1,67 +1,36 @@
 <script>
-  import { onMount } from "svelte";
+  // import { onMount } from "svelte";
   import Table from "../Table.svelte";
 
   let toggleA = false;
 
-  let kitty = 0;
+  export let data;
+
   let todaysProfit = 0;
-  let totalProfit = 0;
-  let bestStreak = 0;
-  let bestKitty = 0;
-  let todaysSettled = [];
-  let openBets = [];
-  let totalLiability = 0;
-  let lastRace = "";
-  let allTimeLiability = 0;
   let monthlyAVG = 0;
   let dailyAVG = 0;
-
-  const URL = "https://rich-system.team-freeman.com";
-  // const URL = "http://localhost:19000";
-
-  function fetchData() {
-    fetch(`${URL}/activity`)
-      .then((response) => response.json())
-      .then((data) => {
-        kitty = data.funds;
-        totalProfit = data.total;
-        bestStreak = data.best;
-        todaysSettled = data.settled;
-        openBets = data.open;
-        bestKitty = data.bestKitty;
-        lastRace = data.last;
-        allTimeLiability = data.atl;
-        monthlyAVG =
-          Object.values(data.monthly).reduce((a, b) => a + b, 0) /
-          Object.keys(data.monthly).length;
-        dailyAVG =
-          Object.values(data.daily).reduce((a, b) => a + b, 0) /
-          Object.keys(data.daily).length;
-      })
-      .catch(console.log);
-  }
+  let totalLiability = 0;
 
   function twoDP(num, comma = true) {
     const two = Math.floor(num * 100) / 100;
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  onMount(() => {
-    fetchData();
-  });
-
-  $: totalLiability = todaysSettled.reduce((acc, curr) => {
+  $: totalLiability = data.settled.reduce((acc, curr) => {
     return acc + curr.liability;
   }, 0);
 
-  $: todaysProfit = todaysSettled.reduce((acc, curr) => {
+  $: todaysProfit = data.settled.reduce((acc, curr) => {
     return acc + curr.profit;
   }, 0);
 
-  // setInterval(() => {
-  //   fetchData();
-  // }, 10000);
+  $: monthlyAVG =
+    Object.values(data.monthly).reduce((a, b) => a + b, 0) /
+    Object.keys(data.monthly).length;
+
+  $: dailyAVG =
+    Object.values(data.daily).reduce((a, b) => a + b, 0) /
+    Object.keys(data.daily).length;
 </script>
 
 <main class="flex col">
@@ -71,7 +40,7 @@
   </h1>
   <h2>
     %{twoDP(
-      todaysProfit != 0 ? (todaysProfit / (kitty - todaysProfit)) * 100 : 0
+      todaysProfit != 0 ? (todaysProfit / (data.funds - todaysProfit)) * 100 : 0
     )}
   </h2>
   <div class="flex">
@@ -83,9 +52,9 @@
     </button>
   </div>
   {#if toggleA}
-    <Table results={todaysSettled} />
+    <Table results={data.settled} />
   {/if}
-  {#if openBets.length > 0}
+  {#if data.open.length > 0}
     <table>
       <tr>
         <th>selection</th>
@@ -93,7 +62,7 @@
         <th>price</th>
         <th>size</th>
       </tr>
-      {#each openBets as bet}
+      {#each data.open as bet}
         <tr>
           <td>{bet.selection}</td>
           <td>{bet.side}</td>
@@ -106,11 +75,11 @@
   <section class="flex wrap">
     <li class="general">
       <p>trades</p>
-      <h3>{Object.keys(todaysSettled).length}</h3>
+      <h3>{Object.keys(data.settled).length}</h3>
     </li>
     <li class="general">
       <p>🔥</p>
-      <h3>{bestStreak}</h3>
+      <h3>{data.best}</h3>
     </li>
     <li class="general">
       <p>avg 🔥</p>
@@ -118,24 +87,24 @@
     </li>
     <li class="general">
       <p>final race</p>
-      <h3>{lastRace}</h3>
+      <h3>{data.last}</h3>
     </li>
     <li class="trophies">
       <p>🏆</p>
-      <h3>£{twoDP(bestKitty)}</h3>
+      <h3>£{twoDP(data.bestKitty)}</h3>
     </li>
     <li class="trophies">
       <p>🏆 range</p>
-      <h3>£{twoDP(kitty - bestKitty)}</h3>
+      <h3>£{twoDP(data.funds - data.bestKitty)}</h3>
     </li>
     <li class="return">
       <p>profit</p>
-      <h3>£{twoDP(totalProfit)}</h3>
+      <h3>£{twoDP(data.total)}</h3>
     </li>
     <li class="return">
       <p>ROI</p>
       <h3>
-        %{((totalProfit / allTimeLiability) * 100).toString().substring(0, 6)}
+        %{((data.total / data.atl) * 100).toString().substring(0, 6)}
       </h3>
     </li>
     <li class="special return">
@@ -146,8 +115,8 @@
     <li class="lia">
       <p>todays avg liability</p>
       <h3>
-        £{Object.keys(todaysSettled).length > 0
-          ? twoDP(totalLiability / Object.keys(todaysSettled).length)
+        £{Object.keys(data.settled).length > 0
+          ? twoDP(totalLiability / Object.keys(data.settled).length)
           : 0}
       </h3>
     </li>
@@ -159,7 +128,7 @@
     </li>
     <li class="lia">
       <p>overall liability</p>
-      <h3>£{twoDP(allTimeLiability)}</h3>
+      <h3>£{twoDP(data.atl)}</h3>
     </li>
   </section>
   <!-- <section>

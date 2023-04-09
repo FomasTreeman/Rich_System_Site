@@ -1,24 +1,6 @@
 <script>
-  import { onMount } from "svelte";
-
-  let nextRace = "";
   let toggle = false;
-  const URL = "https://rich-system.team-freeman.com";
-
-  // const URL = "http://localhost:19000";
-
-  function fetchData() {
-    fetch(`${URL}/activity`)
-      .then((response) => response.json())
-      .then((data) => {
-        nextRace = data.next;
-      })
-      .catch(() => (nextRace = "error"));
-  }
-
-  onMount(() => {
-    fetchData();
-  });
+  export let data;
 </script>
 
 <header>
@@ -34,7 +16,7 @@
   {/if}
   <div class="top-right">
     <p>next race</p>
-    <b>{nextRace}</b>
+    <b>{data.next}</b>
   </div>
 </header>
 
@@ -47,6 +29,7 @@
     display: flex;
     align-items: center;
     gap: 2rem;
+    z-index: 99;
     position: relative;
   }
 

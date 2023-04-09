@@ -5,34 +5,44 @@
     top: true,
     trousers: true,
   };
-
-  function toggleClothes(clothesName) {
-    clothes[clothesName] = !clothes[clothesName];
+  export let data;
+  //   function toggleClothes(clothesName) {
+  //     clothes[clothesName] = !clothes[clothesName];
+  //   }
+  $: {
+    if (data.today > 100) clothes.trousers = false;
+    if (data.today > 200) clothes.top = false;
+    if (data.today > 400) clothes.pants = false;
+    if (data.today > 600) clothes.bra = false;
   }
 </script>
 
-<h1>demo</h1>
-
-<img id="woman" src="woman.jpeg" alt="naked woman" />
-{#if clothes.pants}
-  <img id="pants" src="pants.png" alt="underwear" />
-{/if}
-{#if clothes.bra}
-  <img id="bra" src="bra.png" alt="bra" />
-{/if}
-{#if clothes.top}
-  <img id="top" src="top.png" alt="top" />
-{/if}
-{#if clothes.trousers}
-  <img id="trousers" src="trousers.png" alt="trousers" />
-{/if}
-
-<!-- <img id="male" src="male.jpeg" alt="male" /> -->
+<div>
+  {#if !clothes.bra}
+    <img id="male" src="male.jpeg" alt="male" />
+  {:else}
+    <img id="woman" src="woman.jpeg" alt="naked woman" />
+    {#if clothes.pants}
+      <img id="pants" src="pants.png" alt="underwear" />
+    {/if}
+    {#if clothes.bra}
+      <img id="bra" src="bra.png" alt="bra" />
+    {/if}
+    {#if clothes.top}
+      <img id="top" src="top.png" alt="top" />
+    {/if}
+    {#if clothes.trousers}
+      <img id="trousers" src="trousers.png" alt="trousers" />
+    {/if}
+  {/if}
+</div>
 
 <style>
-  h1 {
-    text-align: center;
-    margin: -10px;
+  div {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    margin-top: -7rem;
   }
 
   #woman,
@@ -52,41 +62,41 @@
 
   #pants {
     position: absolute;
-    bottom: 32%;
-    left: 26%;
-    width: 10rem;
-    height: 10rem;
+    bottom: 307px;
+    left: 117px;
+    width: 132px;
+    height: 89px;
     object-fit: cover;
     z-index: 2;
   }
 
   #bra {
     position: absolute;
-    bottom: 50%;
-    left: 27%;
-    width: 10rem;
-    height: 10rem;
-    z-index: 2;
+    bottom: 427px;
+    left: 116px;
+    width: 134px;
+    height: 153px;
+    z-index: 3;
     object-fit: cover;
   }
 
   #top {
     position: absolute;
-    bottom: 46%;
-    left: 25%;
-    width: 10rem;
-    height: 11rem;
-    z-index: 2;
+    bottom: 387px;
+    left: 82px;
+    width: 187px;
+    height: 176px;
+    z-index: 10;
     object-fit: cover;
   }
 
   #trousers {
     position: absolute;
-    bottom: 3%;
-    left: 25%;
-    width: 10rem;
-    height: 26rem;
-    z-index: 2;
+    bottom: 80px;
+    left: 104px;
+    width: 149px;
+    height: 362px;
+    z-index: 9;
     object-fit: cover;
   }
 </style>

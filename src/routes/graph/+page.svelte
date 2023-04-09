@@ -2,10 +2,8 @@
   import { onMount } from "svelte";
   import Chart from "chart.js/auto";
 
-  const URL = "https://rich-system.team-freeman.com";
-  //   const URL = "http://localhost:19000";
-
-  let allData = {};
+  export let data;
+  let allData = [];
 
   function renderChart() {
     const ctx = document.getElementById("myChart");
@@ -13,11 +11,11 @@
     new Chart(ctx, {
       type: "line",
       data: {
-        labels: Object.keys(allData).reverse(),
+        labels: Object.keys(data.daily).reverse(),
         datasets: [
           {
             label: "days",
-            data: Object.values(allData).reverse(),
+            data: allData,
             borderWidth: 1,
           },
         ],
@@ -32,7 +30,6 @@
         },
         scales: {
           y: {
-            beginAtZero: true,
             title: {
               display: true,
               text: "Profit",
@@ -43,15 +40,14 @@
     });
   }
 
-  async function fetchData() {
-    const response = await fetch(URL + "/activity");
-    const data = await response.json();
-    allData = data.daily;
-    console.log(data);
+  $: {
+    let acc = 840;
+    allData = Object.values(data.daily)
+      .reverse()
+      .map((day) => (acc += day));
   }
 
   onMount(async () => {
-    await fetchData();
     renderChart();
   });
 </script>
