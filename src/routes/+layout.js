@@ -1,3 +1,4 @@
+export const ssr = false;
 const URL = "https://rich-system.team-freeman.com";
 // const URL = "http://localhost:19000";
 
