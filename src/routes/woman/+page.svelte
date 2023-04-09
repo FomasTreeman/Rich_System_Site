@@ -26,7 +26,8 @@
 {#if clothes.trousers}
   <img id="trousers" src="trousers.png" alt="trousers" />
 {/if}
-<img id="male" src="male.jpeg" alt="male" />
+
+<!-- <img id="male" src="male.jpeg" alt="male" /> -->
 
 <style>
   h1 {
