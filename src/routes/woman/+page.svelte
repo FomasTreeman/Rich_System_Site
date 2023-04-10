@@ -1,38 +1,23 @@
 <script>
-  let clothes = {
-    pants: true,
-    bra: true,
-    top: true,
-    trousers: true,
-  };
   export let data;
-  //   function toggleClothes(clothesName) {
-  //     clothes[clothesName] = !clothes[clothesName];
-  //   }
-  $: {
-    if (data.today > 100) clothes.trousers = false;
-    if (data.today > 200) clothes.top = false;
-    if (data.today > 400) clothes.pants = false;
-    if (data.today > 600) clothes.bra = false;
-  }
 </script>
 
 <div>
-  {#if !clothes.bra}
+  {#if !data.today > 700}
     <img id="male" src="male.jpeg" alt="male" />
   {:else}
     <img id="woman" src="woman.jpeg" alt="naked woman" />
-    {#if clothes.pants}
-      <img id="pants" src="pants.png" alt="underwear" />
+    {#if data.today > 100}
+      <img id="trousers" src="trousers.png" alt="trousers" />
     {/if}
-    {#if clothes.bra}
-      <img id="bra" src="bra.png" alt="bra" />
-    {/if}
-    {#if clothes.top}
+    {#if data.today > 200}
       <img id="top" src="top.png" alt="top" />
     {/if}
-    {#if clothes.trousers}
-      <img id="trousers" src="trousers.png" alt="trousers" />
+    {#if data.today > 500}
+      <img id="pants" src="pants.png" alt="underwear" />
+    {/if}
+    {#if data.today > 600}
+      <img id="bra" src="bra.png" alt="bra" />
     {/if}
   {/if}
 </div>
