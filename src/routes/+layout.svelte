@@ -16,7 +16,7 @@
   {/if}
   <div class="top-right">
     <p>next race</p>
-    <b>{data.next}</b>
+    <b>{data.activity.next}</b>
   </div>
 </header>
 

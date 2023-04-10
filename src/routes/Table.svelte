@@ -1,5 +1,6 @@
 <script>
   export let results = [];
+  let currentDay = "";
 
   function calculateRed(price) {
     if (price > 110) {
@@ -18,6 +19,16 @@
     const two = Math.floor(num * 100) / 100;
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
+
+  function isNewDay(time) {
+    if (currentDay == "") {
+      currentDay = time.split("/")[1];
+      return true;
+    } else if (time.split("/")[1] !== currentDay) {
+      currentDay = time.split("/")[1];
+      return true;
+    } else return false;
+  }
 </script>
 
 <table>
@@ -26,7 +37,7 @@
     <th>horse</th>
     <th>side</th>
     <th>odds</th>
-    <th>risk</th>
+    <th>price * stake</th>
     <th>profit</th>
   </tr>
   {#if results.length === 0}
@@ -35,8 +46,13 @@
     </tr>
   {/if}
   {#each results as { time, selection, side, price, liability, profit }}
+    {#if isNewDay(time)}
+      <tr class="day">
+        <td colspan="6">{time.substring(0, 5)}</td>
+      </tr>
+    {/if}
     <tr>
-      <td>{time}</td>
+      <td>{time.length > 5 ? time.split("/")[2] : time}</td>
       <td>{selection}</td>
       <td>{side}</td>
       <td
@@ -52,3 +68,10 @@
     </tr>
   {/each}
 </table>
+
+<style>
+  .day {
+    text-align: center;
+    background-color: grey;
+  }
+</style>

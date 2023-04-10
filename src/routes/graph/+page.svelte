@@ -11,7 +11,7 @@
     new Chart(ctx, {
       type: "line",
       data: {
-        labels: Object.keys(data.daily).reverse(),
+        labels: Object.keys(data.history.daily).reverse(),
         datasets: [
           {
             label: "days",
@@ -42,7 +42,7 @@
 
   $: {
     let acc = 840;
-    allData = Object.values(data.daily)
+    allData = Object.values(data.history.daily)
       .reverse()
       .map((day) => (acc += day));
   }

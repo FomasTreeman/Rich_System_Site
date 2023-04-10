@@ -10,8 +10,8 @@
 </script>
 
 <main>
-  <h1>£{twoDP(data.funds)}</h1>
-  <h2>{data.days} day streak</h2>
+  <h1>£{twoDP(data.activity.funds)}</h1>
+  <h2>{data.activity.days} day streak</h2>
   <img
     src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
     alt="making money gif with looney tunes"

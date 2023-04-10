@@ -7,8 +7,6 @@
   export let data;
 
   let todaysProfit = 0;
-  let monthlyAVG = 0;
-  let dailyAVG = 0;
   let totalLiability = 0;
 
   function twoDP(num, comma = true) {
@@ -16,21 +14,13 @@
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  $: totalLiability = data.settled.reduce((acc, curr) => {
+  $: totalLiability = data.activity.settled.reduce((acc, curr) => {
     return acc + curr.liability;
   }, 0);
 
-  $: todaysProfit = data.settled.reduce((acc, curr) => {
+  $: todaysProfit = data.activity.settled.reduce((acc, curr) => {
     return acc + curr.profit;
   }, 0);
-
-  $: monthlyAVG =
-    Object.values(data.monthly).reduce((a, b) => a + b, 0) /
-    Object.keys(data.monthly).length;
-
-  $: dailyAVG =
-    Object.values(data.daily).reduce((a, b) => a + b, 0) /
-    Object.keys(data.daily).length;
 </script>
 
 <main class="flex col">
@@ -40,7 +30,9 @@
   </h1>
   <h2>
     %{twoDP(
-      todaysProfit != 0 ? (todaysProfit / (data.funds - todaysProfit)) * 100 : 0
+      todaysProfit != 0
+        ? (todaysProfit / (data.activity.funds - todaysProfit)) * 100
+        : 0
     )}
   </h2>
   <div class="flex">
@@ -52,17 +44,20 @@
     </button>
   </div>
   {#if toggleA}
-    <Table results={data.settled} />
+    <!-- <button>back</button>
+    <button>lay</button> -->
+    <Table results={data.activity.settled} />
   {/if}
-  {#if data.open.length > 0}
+  {#if data.activity.open.length > 0}
     <table>
+      <caption>🐎 open 🐎 </caption>
       <tr>
         <th>selection</th>
         <th>side</th>
         <th>price</th>
         <th>size</th>
       </tr>
-      {#each data.open as bet}
+      {#each data.activity.open as bet}
         <tr>
           <td>{bet.selection}</td>
           <td>{bet.side}</td>
@@ -75,48 +70,44 @@
   <section class="flex wrap">
     <li class="general">
       <p>trades</p>
-      <h3>{Object.keys(data.settled).length}</h3>
+      <h3>{Object.keys(data.activity.settled).length}</h3>
     </li>
     <li class="general">
       <p>🔥</p>
-      <h3>{data.best}</h3>
-    </li>
-    <li class="general">
-      <p>avg 🔥</p>
-      <h3>🧑‍💻</h3>
+      <h3>{data.activity.best}</h3>
     </li>
     <li class="general">
       <p>final race</p>
-      <h3>{data.last}</h3>
+      <h3>{data.activity.last}</h3>
+    </li>
+    <li class="general">
+      <p>races today</p>
+      <h3>{data.activity.totalRaces}</h3>
     </li>
     <li class="trophies">
       <p>🏆</p>
-      <h3>£{twoDP(data.bestKitty)}</h3>
+      <h3>£{twoDP(data.activity.bestKitty)}</h3>
     </li>
     <li class="trophies">
       <p>🏆 range</p>
-      <h3>£{twoDP(data.funds - data.bestKitty)}</h3>
+      <h3>£{twoDP(data.activity.funds - data.activity.bestKitty)}</h3>
     </li>
     <li class="return">
       <p>profit</p>
-      <h3>£{twoDP(data.total)}</h3>
+      <h3>£{twoDP(data.activity.total)}</h3>
     </li>
-    <li class="return">
-      <p>ROI</p>
-      <h3>
-        %{((data.total / data.atl) * 100).toString().substring(0, 6)}
-      </h3>
-    </li>
-    <li class="special return">
-      <p>weekly: £🧑‍💻</p>
-      <p>monthly: £{twoDP(monthlyAVG)}</p>
-      <p>daily: £{twoDP(dailyAVG)}</p>
-    </li>
+
     <li class="lia">
       <p>todays avg liability</p>
       <h3>
-        £{Object.keys(data.settled).length > 0
-          ? twoDP(totalLiability / Object.keys(data.settled).length)
+        £{Object.keys(data.activity.settled.filter((bet) => bet.side != "BACK"))
+          .length > 0
+          ? twoDP(
+              totalLiability /
+                Object.keys(
+                  data.activity.settled.filter((bet) => bet.side != "BACK")
+                ).length
+            )
           : 0}
       </h3>
     </li>
@@ -125,10 +116,6 @@
       <h3>
         £{twoDP(totalLiability)}
       </h3>
-    </li>
-    <li class="lia">
-      <p>overall liability</p>
-      <h3>£{twoDP(data.atl)}</h3>
     </li>
   </section>
   <!-- <section>
@@ -143,11 +130,6 @@
       allowfullscreen
     />
   </section> -->
-  <br />
-  <!-- <h2>in works</h2> -->
-  <br />
-  <img src="/work.gif" alt="making money gif with looney tunes" />
-  <!-- <b>horses in action</b> -->
 </main>
 
 <style>
