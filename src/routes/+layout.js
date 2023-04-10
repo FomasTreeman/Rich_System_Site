@@ -1,6 +1,6 @@
 export const ssr = false;
-// const URL = "https://rich-system.team-freeman.com";
-const URL = "http://localhost:19000";
+const URL = "https://rich-system.team-freeman.com";
+// const URL = "http://localhost:19000";
 
 export async function load({ fetch, params }) {
   const [acResp, hisResp] = await Promise.all([
