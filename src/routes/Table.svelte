@@ -1,6 +1,7 @@
 <script>
   export let results = [];
   let currentDay = "";
+  let filteredResults = results;
 
   function calculateRed(price) {
     if (price > 110) {
@@ -29,8 +30,23 @@
       return true;
     } else return false;
   }
+
+  function filterResults(type) {
+    if (type === "BACK") {
+      filteredResults = results.filter((result) => result.side === "BACK");
+    } else if (type === "LAY") {
+      filteredResults = results.filter((result) => result.side === "LAY");
+    } else {
+      filteredResults = results;
+    }
+  }
 </script>
 
+<div>
+  <button on:click={() => filterResults("BACK")}> back </button>
+  <button on:click={() => filterResults("LAY")}> lay </button>
+  <button on:click={() => filterResults("ALL")}> all </button>
+</div>
 <table>
   <tr>
     <th>time</th>
@@ -40,12 +56,12 @@
     <th>price * stake</th>
     <th>profit</th>
   </tr>
-  {#if results.length === 0}
+  {#if filteredResults.length === 0}
     <tr>
       <td colspan="6">no settled bets</td>
     </tr>
   {/if}
-  {#each results as { time, selection, side, price, liability, profit }}
+  {#each filteredResults as { time, selection, side, price, liability, profit }}
     {#if isNewDay(time)}
       <tr class="day">
         <td colspan="6">{time.substring(0, 5)}</td>
@@ -73,5 +89,16 @@
   .day {
     text-align: center;
     background-color: grey;
+  }
+
+  div {
+    display: flex;
+    justify-content: end;
+    gap: 1rem;
+    margin: 1rem;
+  }
+
+  div > * {
+    background-color: black;
   }
 </style>

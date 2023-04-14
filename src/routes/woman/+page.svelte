@@ -1,22 +1,23 @@
 <script>
   export let data;
+  $: console.log(data.activity.today);
 </script>
 
 <div>
-  {#if !data.today > 700}
+  {#if data.activity.today > 1000}
     <img id="male" src="male.jpeg" alt="male" />
   {:else}
     <img id="woman" src="woman.jpeg" alt="naked woman" />
-    {#if data.today > 100}
+    {#if !(data.activity.today > 100)}
       <img id="trousers" src="trousers.png" alt="trousers" />
     {/if}
-    {#if data.today > 200}
+    {#if !(data.activity.today > 200)}
       <img id="top" src="top.png" alt="top" />
     {/if}
-    {#if data.today > 500}
+    {#if !(data.activity.today > 500)}
       <img id="pants" src="pants.png" alt="underwear" />
     {/if}
-    {#if data.today > 600}
+    {#if !(data.activity.today > 600)}
       <img id="bra" src="bra.png" alt="bra" />
     {/if}
   {/if}
@@ -42,7 +43,7 @@
   }
 
   #male {
-    z-index: -1;
+    z-index: 9;
   }
 
   #pants {
