@@ -55,7 +55,7 @@
 <nav>
   <button on:click={profit}>PROFIT</button>
   <button on:click={kitty}>KITTY</button>
-  <!-- <button on:click={log}>LOG</button> -->
+  <button on:click={log}>LOG</button>
   <button on:click={reg}>REG</button>
 </nav>
 <Chart {type} />
