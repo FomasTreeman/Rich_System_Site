@@ -1,22 +1,21 @@
 <script>
   let toggle = false;
   export let data;
+
+  function hide() {
+    toggle = false;
+  }
 </script>
 
 <header>
   <a href="/"> HOME </a>
   <a href="/activity"> ACTIVITY </a>
-  <button
-    on:click={() => (toggle = !toggle)}
-    on:focusout={() => (toggle = false)}
-  >
-    🔽
-  </button>
+  <button on:click={() => (toggle = !toggle)}> 🔽 </button>
   {#if toggle}
     <ul>
-      <a href="/woman"> WOMAN </a>
-      <a href="/graph"> GRAPH </a>
-      <a href="/history"> HISTORY </a>
+      <a href="/woman" on:click={hide}> WOMAN </a>
+      <a href="/graph" on:click={hide}> GRAPH </a>
+      <a href="/history" on:click={hide}> HISTORY </a>
     </ul>
   {/if}
   <div class="top-right">
