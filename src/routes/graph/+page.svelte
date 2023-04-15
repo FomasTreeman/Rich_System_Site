@@ -38,6 +38,6 @@
   nav {
     display: flex;
     justify-content: space-around;
-    margin-bottom: 1rem;
+    margin-block: 3rem;
   }
 </style>
