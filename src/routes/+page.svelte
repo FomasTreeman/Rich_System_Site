@@ -11,7 +11,32 @@
 
 <main>
   <h1>£{twoDP(data.activity.funds)}</h1>
-  <h2>{data.activity.days} day streak</h2>
+  <section>
+    <li>
+      <p>LAY</p>
+      <h3>
+        {data.activity.settled.reduce((acc, curr) => {
+          if (curr.side == "LAY") acc += curr.profit;
+        }, 0)}
+      </h3>
+    </li>
+    <li>
+      <p>TOTAL</p>
+      <h3>
+        {data.activity.settled.reduce((acc, curr) => {
+          acc + curr;
+        }, 0)}
+      </h3>
+    </li>
+    <li>
+      <p>BACK</p>
+      <h3>
+        {data.activity.settled.reduce((acc, curr) => {
+          if (curr.side == "BACK") acc += curr.profit;
+        }, 0)}
+      </h3>
+    </li>
+  </section>
   <img
     src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
     alt="making money gif with looney tunes"
@@ -21,8 +46,7 @@
 <style>
   main {
     margin: 0;
-    width: 50%;
-    display: flex;
+    width: 100%;
     place-items: center;
     text-align: center;
     position: absolute;
@@ -33,13 +57,39 @@
     flex-direction: column;
   }
 
+  section {
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin: 1.5rem;
+    justify-content: center;
+  }
+
+  li {
+    padding-block: 0.5rem;
+    width: 10%;
+  }
+
+  li:first-child {
+    background-color: rgba(0, 128, 0, 0.56);
+  }
+
+  li:last-child {
+    background-color: rgba(255, 0, 0, 0.586);
+  }
+
   img {
-    max-width: 100%;
+    max-width: 50%;
   }
 
   h1 {
     font-size: 3.2em;
     line-height: 1.1;
     margin: 0%;
+  }
+
+  p,
+  h3 {
+    margin: 0;
   }
 </style>

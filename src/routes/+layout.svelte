@@ -6,7 +6,12 @@
 <header>
   <a href="/"> HOME </a>
   <a href="/activity"> ACTIVITY </a>
-  <button on:click={() => (toggle = !toggle)}> 🔽 </button>
+  <button
+    on:click={() => (toggle = !toggle)}
+    on:focusout={() => (toggle = false)}
+  >
+    🔽
+  </button>
   {#if toggle}
     <ul>
       <a href="/woman"> WOMAN </a>

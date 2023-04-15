@@ -73,10 +73,6 @@
       <h3>{Object.keys(data.activity.settled).length}</h3>
     </li>
     <li class="general">
-      <p>🔥</p>
-      <h3>{data.activity.best}</h3>
-    </li>
-    <li class="general">
       <p>final race</p>
       <h3>{data.activity.last}</h3>
     </li>
@@ -100,15 +96,23 @@
     <li class="lia">
       <p>todays avg liability</p>
       <h3>
-        £{Object.keys(data.activity.settled.filter((bet) => bet.side != "BACK"))
-          .length > 0
+        £{Object.values(data.activity.settled).reduce((acc, curr) => {
+          if (curr.side == "LAY") acc += curr.liability;
+        }, 0) /
+          Object.values(data.activity.settled).filter(
+            (bet) => bet.side == "LAY"
+          ).length || 0}
+
+        <!-- £{Object.values(data.activity.settled).filter(
+          (bet) => bet.side != "BACK"
+        ).length > 0
           ? twoDP(
               totalLiability /
-                Object.keys(
-                  data.activity.settled.filter((bet) => bet.side != "BACK")
-                ).length
-            )
-          : 0}
+                Object.values(data.activity.settled).filter(
+                  (bet) => bet.side != "BACK"
+                )
+            ).length
+          : 0} -->
       </h3>
     </li>
     <li class="lia">
@@ -133,16 +137,6 @@
 </main>
 
 <style>
-  .flex {
-    display: flex;
-    flex-direction: row;
-    /* justify-content: space-between; */
-  }
-
-  .col {
-    flex-direction: column;
-  }
-
   /* .space-around {
     justify-content: space-around;
   } */
@@ -153,24 +147,8 @@
     justify-content: center;
   }
 
-  .special > * {
-    text-align: start;
-  }
-
   section {
     margin-top: 2rem;
-  }
-
-  li {
-    list-style: none;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    padding-inline: 2rem;
-    border-radius: 1rem;
-    border: 1px solid grey;
-    box-shadow: 5px 7px 9px 2px rgba(0, 0, 0, 0.25);
   }
 
   .general {
@@ -204,9 +182,5 @@
   button {
     margin-inline: auto;
     margin-block: 1rem;
-  }
-
-  img {
-    max-width: 100%;
   }
 </style>

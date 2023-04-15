@@ -21,7 +21,7 @@
 
 <section class="flex wrap">
   <li class="general">
-    <p>avg no. of bets between losses</p>
+    <p>🔥</p>
     <h3>{data.history.avgStreak}</h3>
   </li>
   <li class="general">
@@ -49,16 +49,6 @@
 <Table results={data.history.history} />
 
 <style>
-  .flex {
-    display: flex;
-    flex-direction: row;
-    /* justify-content: space-between; */
-  }
-
-  .col {
-    flex-direction: column;
-  }
-
   /* .space-around {
     justify-content: space-around;
   } */
@@ -93,10 +83,6 @@
     background-color: blueviolet;
   }
 
-  .trophies {
-    background-color: orange;
-  }
-
   .return {
     background-color: rgb(209, 104, 121);
   }
@@ -110,19 +96,8 @@
     margin-bottom: 0px;
   }
 
-  h1,
-  h2,
   p {
     text-align: center;
     margin: 0px;
-  }
-
-  button {
-    margin-inline: auto;
-    margin-block: 1rem;
-  }
-
-  img {
-    max-width: 100%;
   }
 </style>
