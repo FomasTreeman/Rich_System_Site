@@ -22,6 +22,7 @@
   }
 
   function isNewDay(time) {
+    if (time.length == 5) return false;
     if (currentDay == "") {
       currentDay = time.split("/")[1];
       return true;

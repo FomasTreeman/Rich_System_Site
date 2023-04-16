@@ -26,9 +26,11 @@
     >
       <p>LAY</p>
       <h3>
-        £{data.activity.settled.reduce(
-          (acc, curr) => (curr.side == "LAY" ? (acc += curr.profit) : acc),
-          0
+        £{twoDP(
+          data.activity.settled.reduce(
+            (acc, curr) => (curr.side == "LAY" ? (acc += curr.profit) : acc),
+            0
+          )
         )}
       </h3>
     </li>
@@ -44,9 +46,11 @@
     >
       <p>BACK</p>
       <h3>
-        £{data.activity.settled.reduce(
-          (acc, curr) => (curr.side == "BACK" ? (acc += curr.profit) : acc),
-          0
+        £{twoDP(
+          data.activity.settled.reduce(
+            (acc, curr) => (curr.side == "BACK" ? (acc += curr.profit) : acc),
+            0
+          )
         )}
       </h3>
     </li>
