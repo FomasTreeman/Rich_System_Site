@@ -85,7 +85,7 @@
 
   li {
     padding-block: 0.5rem;
-    width: 10%;
+    min-width: 10%;
   }
   /* 
   li:first-child {
