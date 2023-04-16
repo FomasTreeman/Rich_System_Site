@@ -26,7 +26,10 @@
 <nav>
   <button on:click={() => (type = xy())}>PROFIT</button>
   <button on:click={() => (type = kitty())}>KITTY</button>
-  <button on:click={() => (type = log())}>LOG</button>
+  <button
+    on:click={() => (type = log())}
+    style="text-decoration: line-through; opacity: 0.5;">LOG</button
+  >
 </nav>
 <Chart {type} />
 
