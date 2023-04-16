@@ -5,33 +5,49 @@
     const two = Math.floor(num * 100) / 100;
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
+
+  $: console.log(
+    data.activity.settled.reduce((acc, curr) => (acc += curr.profit), 0)
+  );
 </script>
 
 <main>
   <h1>£{twoDP(data.activity.funds)}</h1>
   <section>
-    <li>
+    <li
+      style="background-color: {Math.sign(
+        data.activity.settled.reduce(
+          (acc, curr) => (curr.side == 'LAY' ? (acc += curr.profit) : acc),
+          0
+        )
+      ) != -1
+        ? 'rgba(0, 128, 0, 0.56)'
+        : 'rgba(255, 0, 0, 0.586)'}"
+    >
       <p>LAY</p>
       <h3>
-        {data.activity.settled.reduce((acc, curr) => {
-          if (curr.side == "LAY") acc += curr.profit;
-        }, 0)}
+        £{data.activity.settled.reduce(
+          (acc, curr) => (curr.side == "LAY" ? (acc += curr.profit) : acc),
+          0
+        )}
       </h3>
     </li>
-    <li>
-      <p>TOTAL</p>
-      <h3>
-        {data.activity.settled.reduce((acc, curr) => {
-          acc + curr;
-        }, 0)}
-      </h3>
-    </li>
-    <li>
+    <li
+      style="background-color: {Math.sign(
+        data.activity.settled.reduce(
+          (acc, curr) => (curr.side == 'BACK' ? (acc += curr.profit) : acc),
+          0
+        )
+      ) != -1
+        ? 'rgba(0, 128, 0, 0.56)'
+        : 'rgba(255, 0, 0, 0.586)'}"
+    >
       <p>BACK</p>
       <h3>
-        {data.activity.settled.reduce((acc, curr) => {
-          if (curr.side == "BACK") acc += curr.profit;
-        }, 0)}
+        £{data.activity.settled.reduce(
+          (acc, curr) => (curr.side == "BACK" ? (acc += curr.profit) : acc),
+          0
+        )}
       </h3>
     </li>
   </section>
@@ -67,14 +83,14 @@
     padding-block: 0.5rem;
     width: 10%;
   }
-
+  /* 
   li:first-child {
     background-color: rgba(0, 128, 0, 0.56);
   }
 
   li:last-child {
     background-color: rgba(255, 0, 0, 0.586);
-  }
+  } */
 
   img {
     max-width: 50%;
