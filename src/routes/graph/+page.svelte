@@ -31,7 +31,6 @@
     const newData = oldData.map((coord) => {
       return { x: Math.floor(Date.parse(coord.x) / 1000000), y: coord.y };
     });
-    console.log(newData);
     const n = newData.length;
     let xSum = 0,
       ySum = 0,

@@ -48,7 +48,7 @@
     <button>lay</button> -->
     <Table results={data.activity.settled} />
   {/if}
-  {#if data.activity.open == null}
+  {#if data.activity.open != null}
     <table>
       <caption>🐎 open 🐎 </caption>
       <tr>
