@@ -96,23 +96,12 @@
     <li class="lia">
       <p>todays avg liability</p>
       <h3>
-        £{Object.values(data.activity.settled).reduce((acc, curr) => {
-          if (curr.side == "LAY") acc += curr.liability;
-        }, 0) /
-          Object.values(data.activity.settled).filter(
-            (bet) => bet.side == "LAY"
-          ).length || 0}
-
-        <!-- £{Object.values(data.activity.settled).filter(
-          (bet) => bet.side != "BACK"
-        ).length > 0
-          ? twoDP(
-              totalLiability /
-                Object.values(data.activity.settled).filter(
-                  (bet) => bet.side != "BACK"
-                )
-            ).length
-          : 0} -->
+        £{twoDP(
+          data.activity.settled.reduce(
+            (acc, curr) => (curr.side == "LAY" ? acc + curr.liability : acc),
+            0
+          ) / data.activity.settled.filter((bet) => bet.side == "LAY").length
+        ) || 0}
       </h3>
     </li>
     <li class="lia">
