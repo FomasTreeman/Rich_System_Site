@@ -16,7 +16,7 @@
       <a href="/woman" on:click={hide}> WOMAN </a>
       <a href="/graph" on:click={hide}> GRAPH </a>
       <a href="/history" on:click={hide}> HISTORY </a>
-      <a href="/dev" on:click={hide}> DEV </a>
+      <a href="/dev" on:click={hide}> login </a>
     </ul>
   {/if}
   <div class="top-right">
