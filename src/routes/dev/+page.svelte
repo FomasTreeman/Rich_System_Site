@@ -2,11 +2,41 @@
   import Login from "./Login.svelte";
   import user from "../../user";
 
-  let back = true;
-  let lay = true;
-  let backPerc = 0.5;
-  let layPerc = 12.5;
+  //   const URL = "https://rich_system.team-freeman.com";
+  const URL = "http://localhost:19000";
+
+  let settings = {
+    back: {
+      on: true,
+      perc: 0.5,
+      min: 0.5,
+      max: 50,
+    },
+    lay: {
+      on: true,
+      perc: 12.5,
+      min: 0.5,
+      max: 50,
+    },
+  };
   let userName;
+
+  function submit() {
+    fetch(`${URL}/settings`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(settings),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   user.subscribe((value) => {
     userName = value;
@@ -15,15 +45,19 @@
 </script>
 
 {#if userName != null}
-  <h1>Hi {userName}!</h1>
+  <article class="flex col">
+    <h1>Hi {userName}!</h1>
+    <button>SUBMIT SETTINGS</button>
+  </article>
+
   <section class="flex">
     <div class="flex col">
       <h2>lay</h2>
       <input
         type="checkbox"
-        checked={lay}
+        checked={settings.lay.on}
         on:change={(e) => {
-          lay = e.target.checked;
+          settings.lay.on = e.target.checked;
         }}
         id="lay"
       />
@@ -32,11 +66,71 @@
       <h2>back</h2>
       <input
         type="checkbox"
-        checked={back}
+        checked={settings.back.on}
         on:change={(e) => {
-          back = e.target.checked;
+          settings.back.on = e.target.checked;
         }}
         id="back"
+      />
+    </div>
+  </section>
+  <section class="flex">
+    <div>
+      <label for="layMin">min: </label>
+      <input
+        type="number"
+        value={settings.lay.min}
+        min="0"
+        max="50"
+        step="0.5"
+        on:change={(e) => {
+          settings.lay.min = e.target.value;
+        }}
+        id="layPerc"
+      />
+    </div>
+    <div>
+      <label for="backMin">min: </label>
+      <input
+        type="number"
+        value={settings.back.min}
+        min="0"
+        max="50"
+        step="0.5"
+        on:change={(e) => {
+          settings.back.min = e.target.value;
+        }}
+        id="backMin"
+      />
+    </div>
+  </section>
+  <section class="flex" style="margin-top: 0.5rem">
+    <div>
+      <label for="layMax">max: </label>
+      <input
+        type="number"
+        value={settings.lay.max}
+        min="5"
+        max="200"
+        step="1"
+        on:change={(e) => {
+          settings.lay.max = e.target.value;
+        }}
+        id="layMin"
+      />
+    </div>
+    <div>
+      <label for="backMax">max: </label>
+      <input
+        type="number"
+        value={settings.back.max}
+        min="0"
+        max="50"
+        step="0.5"
+        on:change={(e) => {
+          settings.back.max = e.target.value;
+        }}
+        id="backMax"
       />
     </div>
   </section>
@@ -45,12 +139,12 @@
       <label for="layPerc">%</label>
       <input
         type="number"
-        value={layPerc}
+        value={settings.lay.perc}
         min="0"
         max="50"
         step="0.5"
         on:change={(e) => {
-          layPerc = e.target.value;
+          settings.lay.perc = e.target.value;
         }}
         id="layPerc"
       />
@@ -59,9 +153,9 @@
         min="15"
         max="50"
         step="0.5"
-        value={layPerc}
+        value={settings.lay.perc}
         on:change={(e) => {
-          layPerc = e.target.value;
+          settings.lay.perc = e.target.value;
         }}
       />
     </div>
@@ -69,12 +163,12 @@
       <label for="backPerc">%</label>
       <input
         type="number"
-        value={backPerc}
+        value={settings.back.perc}
         min="0"
         max="50"
         step="0.05"
         on:change={(e) => {
-          backPerc = e.target.value;
+          settings.back.perc = e.target.value;
         }}
         id="backPerc"
       />
@@ -83,9 +177,9 @@
         min="0"
         max="50"
         step="0.05"
-        value={backPerc}
+        value={settings.back.perc}
         on:change={(e) => {
-          backPerc = e.target.value;
+          settings.back.perc = e.target.value;
         }}
         id="backPerc"
       />
@@ -103,6 +197,10 @@
 
   .flex {
     justify-content: space-around;
+  }
+
+  article.flex {
+    align-items: center;
   }
 
   .slider {
