@@ -16,7 +16,7 @@
       <a href="/woman" on:click={hide}> WOMAN </a>
       <a href="/graph" on:click={hide}> GRAPH </a>
       <a href="/history" on:click={hide}> HISTORY </a>
-      <a href="/dev" on:click={hide}> login </a>
+      <a href="/dev" on:click={hide}> DEV </a>
     </ul>
   {/if}
   <div class="top-right">
@@ -57,14 +57,17 @@
     position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    background-color: rgba(28, 26, 26, 0.3);
+    gap: 1rem;
+    background-color: rgba(80, 70, 70, 0.941);
     top: 100%;
-    left: -1.5rem;
-    width: 100%;
-    border: 3px solid black;
+    left: 9rem;
     border-radius: 1rem;
-    padding-block: 0.5rem;
+    padding: 1rem;
+    box-shadow: 5px 7px 9px 2px rgba(0, 0, 0, 0.25);
+  }
+
+  ul > a {
+    text-decoration: underline;
   }
 
   p,
