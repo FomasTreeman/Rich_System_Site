@@ -4,8 +4,7 @@
   import user from "../../user";
   import Custom from "./Custom.svelte";
 
-  //   const URL = "https://rich_system.team-freeman.com";
-  const URL = "http://localhost:19000";
+  const URL = "https://rich_system.team-freeman.com";
 
   let settings = {};
   let userName;
