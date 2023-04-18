@@ -4,8 +4,8 @@
   let password = "";
   let currentError = null;
 
-  //   const URL = "https://rich_system.team-freeman.com";
-  const URL = "http://localhost:19000";
+  const URL = "https://rich_system.team-freeman.com";
+  // const URL = "http://localhost:19000";
 
   const login = async (e) => {
     e.preventDefault();
