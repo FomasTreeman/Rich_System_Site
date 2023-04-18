@@ -24,7 +24,6 @@
   }
 
   function dateToInt(date) {
-    console.log(date);
     const number = parseInt(
       date.split("-").reduce((acc, curr) => acc.concat(curr), "")
     );
@@ -32,7 +31,6 @@
   }
 
   function filterKitty(e) {
-    console.log(e.target.from.value, e.target.to.value);
     return kitty().filter((day) => {
       return dateToInt(day.x) >= dateToInt(e.target.from.value) &&
         dateToInt(day.x) <= dateToInt(e.target.to.value)
