@@ -5,20 +5,21 @@
   export let URL;
 
   function dispatch(message) {
+    console.log(message);
     if (!confirm(`Are you sure you want to deploy ${message}?`)) return;
-    fetch(URL + "/git/dispatches", {
+    fetch(URL + "/git/dispatch", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "text/plain",
       },
-      body: JSON.stringify(message),
+      body: message,
     });
   }
 
   onMount(async () => {
-    const [tagRes, branchRes] = await Promise.all([
-      fetch(URL + "/git/tags"),
+    const [branchRes, tagRes] = await Promise.all([
       fetch(URL + "/git/branches"),
+      fetch(URL + "/git/tags"),
     ]);
     const [tagJson, branchJson] = await Promise.all([
       tagRes.json(),
