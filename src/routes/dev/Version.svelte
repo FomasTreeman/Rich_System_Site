@@ -1,9 +1,8 @@
 <script>
   import { onMount } from "svelte";
 
-  const URL = "https://rich_system.team-freeman.com";
-
   let versions = [];
+  export let URL;
 
   function dispatch(message) {
     if (!confirm(`Are you sure you want to deploy ${message}?`)) return;

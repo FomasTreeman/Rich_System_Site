@@ -27,14 +27,14 @@
     <button on:click={() => toggleContent("version")}>version</button>
   </nav>
   {#if active == "customize"}
-    <Custom />
+    <Custom {URL} />
   {:else if active == "presets"}
-    <Presets />
+    <Presets {URL} />
   {:else if active == "version"}
-    <Version />
+    <Version {URL} />
   {/if}
 {:else}
-  <Login />
+  <Login {URL} />
 {/if}
 
 <style>

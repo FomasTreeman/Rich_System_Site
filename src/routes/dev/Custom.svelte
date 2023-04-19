@@ -2,8 +2,7 @@
   import { onMount } from "svelte";
   import SettingsForm from "./SettingsForm.svelte";
   let currentSettings = {};
-
-  const URL = "https://rich-system.team-freeman.com";
+  export let URL;
 
   function postSettings(newSettings) {
     fetch(`${URL}/settings`, {

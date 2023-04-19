@@ -1,12 +1,12 @@
 <script>
   import { onMount } from "svelte";
   import SettingsForm from "./SettingsForm.svelte";
-  const URL = "https://rich-system.team-freeman.com";
 
   let presets = {};
   let settings = {};
   let showForm = false;
   let newPresetName = "";
+  export let URL;
 
   function post(params, body = null) {
     fetch(`${URL}/settings/${params}`, {

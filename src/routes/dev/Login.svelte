@@ -1,8 +1,7 @@
 <script>
   import user from "../../user";
   let currentError = null;
-
-  const URL = "https://rich_system.team-freeman.com";
+  export let URL;
 
   const login = async (e) => {
     e.preventDefault();
