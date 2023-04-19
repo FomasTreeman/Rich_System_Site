@@ -6,15 +6,12 @@
   let dailyAVG;
 
   function atl() {
-    console.log(data.history.history);
     const allTime = data.history.history.reduce((acc, curr) => {
       if (curr.side == "BACK") return acc + curr.liability / curr.price;
       if (curr.side == "LAY") return acc + curr.liability;
     }, 0);
     return allTime;
   }
-
-  console.log(atl());
 
   function getStreaks() {
     let streaks = [];

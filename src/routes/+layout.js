@@ -1,7 +1,7 @@
 export const ssr = false;
 const URL = "https://rich-system.team-freeman.com";
 
-export async function load({ fetch, params }) {
+export async function load({ fetch }) {
   const [acResp, hisResp] = await Promise.all([
     fetch(`${URL}/activity`),
     fetch(`${URL}/history`),
@@ -30,12 +30,6 @@ export async function load({ fetch, params }) {
         daily[dayID] += bet.profit;
       }
     });
-    // const monthlyAVG =
-    //   Object.values(monthly).reduce((a, b) => a + b, 0) /
-    //   Object.keys(monthly).length;
-    // const dailyAVG =
-    //   Object.values(daily).reduce((a, b) => a + b, 0) / Object.keys(daily).length;
-    console.log("🔥", monthly, daily);
 
     return { monthly, daily };
   }
@@ -44,5 +38,5 @@ export async function load({ fetch, params }) {
   history["monthly"] = monthly;
   history["daily"] = daily;
 
-  return { activity, history };
+  return { activity: activity, history: history };
 }

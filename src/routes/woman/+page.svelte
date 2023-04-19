@@ -1,6 +1,22 @@
 <script>
   export let data;
   let profit = 0;
+  const wWidth = 1663;
+  const wHeight = 2492;
+  let y = 0;
+  let x = 0;
+
+  function widthRatio() {
+    return wWidth / wHeight;
+  }
+
+  function xDiff() {
+    return wWidth - x;
+  }
+
+  function yDiff() {
+    return wHeight - y;
+  }
 
   $: profit = data.activity.settled.reduce(
     (acc, curr) => (acc += curr.profit),
@@ -8,29 +24,70 @@
   );
 </script>
 
+<svelte:window bind:outerWidth={x} bind:outerHeight={y} />
+
 <div>
   {#if profit > 1000}
     <img id="male" src="male.jpeg" alt="male" />
   {:else}
     <img id="woman" src="woman.jpeg" alt="naked woman" />
     {#if !(profit > 100)}
-      <img id="trousers" src="trousers.png" alt="trousers" />
+      <img
+        style="position: fixed;
+        bottom: {x * widthRatio() * 0.25}px;
+        left: 5%;
+        width: 83%;
+        height: {x * widthRatio() * 1.2}px;
+        z-index: 9;"
+        id="trousers"
+        src="trousers.png"
+        alt="trousers"
+      />
     {/if}
     {#if !(profit > 200)}
-      <img id="top" src="top.png" alt="top" />
+      <img
+        style="position: fixed;
+        bottom: {x * widthRatio() * 1.2}px;
+        left: 28%;
+        width: 38%;
+        height: {x * widthRatio() * 0.6}px;
+        z-index: 9;"
+        id="top"
+        src="top.png"
+        alt="top"
+      />
     {/if}
     {#if !(profit > 500)}
-      <img id="pants" src="pants.png" alt="underwear" />
+      <img
+        style="position: fixed;
+        bottom: {x * widthRatio()}px;
+        left: 32%;
+        width: 30%;
+        height: {x * widthRatio() * 0.3}px;
+        z-index: 7;"
+        id="pants"
+        src="pants.png"
+        alt="underwear"
+      />
     {/if}
     {#if !(profit > 600)}
-      <img id="bra" src="bra.png" alt="bra" />
+      <img
+        style="position: fixed;
+        bottom: {x * widthRatio() * 1.41}px;
+        left: 30%;
+        width: 35%;
+        height: {x * widthRatio() * 0.4}px;
+        z-index: 6;"
+        id="bra"
+        src="bra.png"
+        alt="bra"
+      />
     {/if}
   {/if}
 </div>
 
 <style>
   div {
-    position: relative;
     width: 100vw;
     height: 100vh;
     margin-top: -7rem;
@@ -38,56 +95,23 @@
 
   #woman,
   #male {
-    position: absolute;
+    position: fixed;
+    margin-top: 20%;
     bottom: 0;
     left: 0;
-    width: 100%;
-    height: 85%;
     z-index: 1;
-    object-fit: cover;
+    aspect-ratio: 1663 / 2492;
+    width: 100%;
   }
 
   #male {
     z-index: 9;
   }
 
-  #pants {
-    position: absolute;
-    bottom: 307px;
-    left: 117px;
-    width: 132px;
-    height: 89px;
-    object-fit: cover;
-    z-index: 2;
-  }
-
-  #bra {
-    position: absolute;
-    bottom: 427px;
-    left: 116px;
-    width: 134px;
-    height: 153px;
-    z-index: 3;
-    object-fit: cover;
-  }
-
-  #top {
-    position: absolute;
-    bottom: 387px;
-    left: 82px;
-    width: 187px;
-    height: 176px;
-    z-index: 10;
-    object-fit: cover;
-  }
-
-  #trousers {
-    position: absolute;
-    bottom: 80px;
-    left: 104px;
-    width: 149px;
-    height: 362px;
-    z-index: 9;
-    object-fit: cover;
+  img {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+    pointer-events: none;
   }
 </style>

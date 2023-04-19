@@ -2,7 +2,7 @@
   export let results = [];
   let currentDay = "";
   let filteredResults = results;
-  let range = 500;
+  let range = 200;
 
   function calculateRed(price) {
     if (price > 110) {
