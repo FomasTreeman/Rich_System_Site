@@ -1,51 +1,37 @@
 <script>
   import { onMount } from "svelte";
-  const URL = "https://api.github.com/repos/FomasTreeman/Rich_System";
+
+  const URL = "https://rich_system.team-freeman.com";
 
   let versions = [];
 
   function dispatch(message) {
     if (!confirm(`Are you sure you want to deploy ${message}?`)) return;
-    fetch(URL + "/dispatches", {
+    fetch(URL + "/git/dispatches", {
       method: "POST",
       headers: {
-        Accept: "application/vnd.github.everest-preview+json",
         "Content-Type": "application/json",
-        Authorization: `Bearer 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`,
       },
-      body: JSON.stringify({
-        event_type: "trigger_workflow",
-        client_payload: {
-          message: message,
-        },
-      }),
+      body: JSON.stringify(message),
     });
   }
 
   onMount(async () => {
     const [tagRes, branchRes] = await Promise.all([
-      fetch(URL + "/tags", {
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-          "Content-Type": "application/json",
-          Authorization: `Bearer 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`,
-        },
-      }),
-      fetch(URL + "/branches", {
-        headers: {
-          "X-GitHub-Api-Version": "2022-11-28",
-          "Content-Type": "application/json",
-          Authorization: `Bearer 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`,
-        },
-      }),
+      fetch(URL + "/git/tags"),
+      fetch(URL + "/git/branches"),
     ]);
-    versions = [...(await branchRes.json()), ...(await tagRes.json())];
+    const [tagJson, branchJson] = await Promise.all([
+      tagRes.json(),
+      branchRes.json(),
+    ]);
+    versions = branchJson.concat(tagJson);
   });
 </script>
 
 <section class="flex">
   {#each versions as version}
-    <button on:click={() => dispatch(version.name)}>{version.name}</button>
+    <button on:click={() => dispatch(version)}>{version}</button>
   {/each}
 </section>
 

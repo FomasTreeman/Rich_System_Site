@@ -2,8 +2,7 @@
   import user from "../../user";
   let currentError = null;
 
-  // const URL = "https://rich_system.team-freeman.com";
-  const URL = "http://localhost:19000";
+  const URL = "https://rich_system.team-freeman.com";
 
   const login = async (e) => {
     e.preventDefault();

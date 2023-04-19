@@ -3,11 +3,9 @@
   import SettingsForm from "./SettingsForm.svelte";
   let currentSettings = {};
 
-  const URL = "http://localhost:19000";
+  const URL = "https://rich-system.team-freeman.com";
 
   function postSettings(newSettings) {
-    const dev = true;
-    if (dev) return;
     fetch(`${URL}/settings`, {
       method: "POST",
       headers: {

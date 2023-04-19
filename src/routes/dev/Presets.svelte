@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import SettingsForm from "./SettingsForm.svelte";
-  const URL = "http://localhost:19000";
+  const URL = "https://rich-system.team-freeman.com";
 
   let presets = {};
   let settings = {};
@@ -47,9 +47,12 @@
     if (action == "create") createPreset(preset, newPresetSettings);
   }
 
+  $: console.log(presets);
+
   onMount(async () => {
     const res = await fetch(`${URL}/settings`);
-    const { presets: newPresets, settings: newSettings } = await res.json();
+    const { settings: newSettings, presets: newPresets } = await res.json();
+    console.log(newPresets, newSettings);
     presets = newPresets;
     settings = newSettings;
   });
