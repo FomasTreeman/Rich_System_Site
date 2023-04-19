@@ -24,10 +24,10 @@
   function isNewDay(time) {
     if (time.length == 5) return false;
     if (currentDay == "") {
-      currentDay = time.split("/")[1];
+      currentDay = time.split("/")[2];
       return true;
-    } else if (time.split("/")[1] !== currentDay) {
-      currentDay = time.split("/")[1];
+    } else if (time.split("/")[2] !== currentDay) {
+      currentDay = time.split("/")[2];
       return true;
     } else return false;
   }
@@ -65,7 +65,7 @@
   {#each filteredResults as { time, selection, side, price, liability, profit }}
     {#if isNewDay(time)}
       <tr class="day">
-        <td colspan="6">{time.substring(0, 5)}</td>
+        <td colspan="6">{time.substring(0, 10)}</td>
       </tr>
     {/if}
     <tr>
