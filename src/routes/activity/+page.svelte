@@ -98,7 +98,7 @@
     </li>
     <li class="return">
       <p>profit</p>
-      <h3>£{twoDP(data.activity.total)}</h3>
+      <h3>£{twoDP(data.activity.funds - 840)}</h3>
     </li>
 
     <li class="lia">

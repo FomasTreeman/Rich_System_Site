@@ -5,37 +5,73 @@
   let monthlyAVG;
   let dailyAVG;
 
+  function atl() {
+    console.log(data.history.history);
+    const allTime = data.history.history.reduce((acc, curr) => {
+      if (curr.side == "BACK") return acc + curr.liability / curr.price;
+      if (curr.side == "LAY") return acc + curr.liability;
+    }, 0);
+    return allTime;
+  }
+
+  console.log(atl());
+
+  function getStreaks() {
+    let streaks = [];
+    let index = 0;
+    data.history.history.forEach((bet) => {
+      if (bet.side === "BACK") return;
+      if (bet.profit > 0) {
+        if (!streaks[index]) streaks[index] = 0;
+        streaks[index] += 1;
+      } else {
+        if (!streaks[index]) return;
+        index += 1;
+      }
+    });
+    return streaks;
+  }
+
+  function avgStreak() {
+    const streaks = getStreaks();
+    return Math.floor(streaks.reduce((a, b) => a + b, 0) / streaks.length);
+  }
+
   function twoDP(num, comma = true) {
     const two = Math.floor(num * 100) / 100;
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  $: monthlyAVG =
-    Object.values(data.history.monthly).reduce((a, b) => a + b, 0) /
-    Object.keys(data.history.monthly).length;
+  $: {
+    monthlyAVG =
+      Object.values(data.history.monthly).reduce((a, b) => a + b, 0) /
+      Object.keys(data.history.monthly).length;
+  }
 
-  $: dailyAVG =
-    Object.values(data.history.daily).reduce((a, b) => a + b, 0) /
-    Object.keys(data.history.daily).length;
+  $: {
+    dailyAVG =
+      Object.values(data.history.daily).reduce((a, b) => a + b, 0) /
+      Object.keys(data.history.daily).length;
+  }
 </script>
 
 <section class="flex wrap">
   <li class="general">
     <p>🔥</p>
-    <h3>{data.history.avgStreak}</h3>
+    <h3>{avgStreak()}</h3>
   </li>
   <li class="general">
     <p>losses (lay)</p>
-    <h3>{data.history.losses}</h3>
+    <h3>{getStreaks().length - 1}</h3>
   </li>
   <li class="lia">
     <p>overall liability</p>
-    <h3>£{twoDP(data.history.atl)}</h3>
+    <h3>£{twoDP(atl())}</h3>
   </li>
   <li class="return">
     <p>ROI</p>
     <h3>
-      %{((data.activity.total / data.history.atl) * 100)
+      %{((Math.floor(data.activity.funds - 840) / atl()) * 100)
         .toString()
         .substring(0, 6)}
     </h3>
