@@ -14,6 +14,14 @@
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  function getDailyKitty() {
+    let acc = 840;
+    const kitty = Object.values(data.history.daily)
+      .reverse()
+      .map((profit) => (acc += profit));
+    return kitty;
+  }
+
   $: totalLiability = data.activity.settled.reduce((acc, curr) => {
     return acc + curr.liability;
   }, 0);
@@ -82,11 +90,11 @@
     </li>
     <li class="trophies">
       <p>🏆</p>
-      <h3>£{twoDP(data.activity.bestKitty)}</h3>
+      <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
     </li>
     <li class="trophies">
       <p>🏆 range</p>
-      <h3>£{twoDP(data.activity.funds - data.activity.bestKitty)}</h3>
+      <h3>£{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}</h3>
     </li>
     <li class="return">
       <p>profit</p>
