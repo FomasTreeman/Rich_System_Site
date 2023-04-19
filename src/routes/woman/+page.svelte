@@ -1,23 +1,28 @@
 <script>
   export let data;
-  $: console.log(data.activity.today);
+  let profit = 0;
+
+  $: profit = data.activity.settled.reduce(
+    (acc, curr) => (acc += curr.profit),
+    0
+  );
 </script>
 
 <div>
-  {#if data.activity.today > 1000}
+  {#if profit > 1000}
     <img id="male" src="male.jpeg" alt="male" />
   {:else}
     <img id="woman" src="woman.jpeg" alt="naked woman" />
-    {#if !(data.activity.today > 100)}
+    {#if !(profit > 100)}
       <img id="trousers" src="trousers.png" alt="trousers" />
     {/if}
-    {#if !(data.activity.today > 200)}
+    {#if !(profit > 200)}
       <img id="top" src="top.png" alt="top" />
     {/if}
-    {#if !(data.activity.today > 500)}
+    {#if !(profit > 500)}
       <img id="pants" src="pants.png" alt="underwear" />
     {/if}
-    {#if !(data.activity.today > 600)}
+    {#if !(profit > 600)}
       <img id="bra" src="bra.png" alt="bra" />
     {/if}
   {/if}
