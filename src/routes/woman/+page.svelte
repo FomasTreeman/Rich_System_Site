@@ -31,6 +31,30 @@
     <img id="male" src="male.jpeg" alt="male" />
   {:else}
     <img id="woman" src="woman.jpeg" alt="naked woman" />
+    {#if profit < 0}
+      <img
+        style="position: fixed;
+        bottom: {x * widthRatio() * 0.65}px;
+        left: 16%;
+        width: 60%;
+        height: {x * widthRatio() * 1.2}px;
+        z-index: 10;"
+        id="jacket"
+        src="jacket.png"
+        alt="jacket"
+      />
+      <img
+        style="position: fixed;
+      bottom: {x * widthRatio() * 1.7}px;
+      left: 65%;
+      width: 25%;
+      height: {x * widthRatio() * 0.4}px;
+      z-index: 10;"
+        id="snowflake"
+        src="snowflake.png"
+        alt="snowflake"
+      />
+    {/if}
     {#if !(profit > 100)}
       <img
         style="position: fixed;
