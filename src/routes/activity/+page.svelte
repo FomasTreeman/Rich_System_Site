@@ -11,14 +11,6 @@
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
   }
 
-  function getDailyKitty() {
-    let acc = 840;
-    const kitty = Object.values(data.history.daily)
-      .reverse()
-      .map((profit) => (acc += profit));
-    return kitty;
-  }
-
   function atl() {
     const allTime = data.history.history.reduce((acc, curr) => {
       if (curr.side == "BACK") return acc + curr.liability / curr.price;
@@ -86,9 +78,8 @@
     </button>
   </div>
   {#if toggleA}
-    <!-- <button>back</button>
-    <button>lay</button> -->
     <Table results={data.activity.settled} />
+    <p>Total trades: {Object.keys(data.activity.settled).length}</p>
   {/if}
   {#if data.activity.open != null}
     <table>
@@ -111,15 +102,11 @@
   {/if}
   <section class="flex wrap">
     <li class="general">
-      <p>trades</p>
-      <h3>{Object.keys(data.activity.settled).length}</h3>
-    </li>
-    <li class="general">
       <p>final race</p>
       <h3>{data.activity.last}</h3>
     </li>
     <li class="general">
-      <p>races today</p>
+      <p>races</p>
       <h3>{data.activity.totalRaces}</h3>
     </li>
     <li class="general">
@@ -127,19 +114,12 @@
       <h3>{avgStreak()}</h3>
     </li>
     <li class="general">
-      <p>losses (lay)</p>
+      <p>losses</p>
       <h3>{getStreaks().length - 1}</h3>
     </li>
-    <li class="trophies">
-      <p>🏆</p>
-      <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
-    </li>
-    <li class="trophies">
-      <p>🏆 range</p>
-      <h3>£{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}</h3>
-    </li>
+
     <li class="lia">
-      <p>todays avg liability</p>
+      <p>avg liabil</p>
       <h3>
         £{twoDP(
           data.activity.settled.reduce(
@@ -151,13 +131,13 @@
       </h3>
     </li>
     <li class="lia">
-      <p>todays liability total</p>
+      <p>liabl total</p>
       <h3>
         £{twoDP(totalLiability)}
       </h3>
     </li>
     <li class="lia">
-      <p>overall liability</p>
+      <p>total liabl</p>
       <h3>£{twoDP(atl())}</h3>
     </li>
     <li class="return">
@@ -210,10 +190,6 @@
 
   .general {
     background-color: blueviolet;
-  }
-
-  .trophies {
-    background-color: orange;
   }
 
   .return {

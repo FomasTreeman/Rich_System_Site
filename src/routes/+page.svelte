@@ -1,6 +1,14 @@
 <script>
   export let data;
 
+  function getDailyKitty() {
+    let acc = 840;
+    const kitty = Object.values(data.history.daily)
+      .reverse()
+      .map((profit) => (acc += profit));
+    return kitty;
+  }
+
   function twoDP(num) {
     const two = Math.floor(num * 100) / 100;
     return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
@@ -51,6 +59,11 @@
       </h3>
     </li>
   </section>
+  <li class="trophies">
+    <p>🏆</p>
+    <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
+    <p>£{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}</p>
+  </li>
   <img
     src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
     alt="making money gif with looney tunes"
@@ -83,6 +96,11 @@
     padding-block: 0.5rem;
     min-width: 10%;
   }
+
+  .trophies {
+    background-color: orange;
+  }
+
   /* 
   li:first-child {
     background-color: rgba(0, 128, 0, 0.56);
@@ -93,6 +111,7 @@
   } */
 
   img {
+    margin-block: 2rem;
     max-width: 50%;
   }
 
