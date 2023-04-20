@@ -50,52 +50,56 @@
   <button on:click={() => filterResults("ALL")}> all </button>
 </div>
 <table>
-  <tr>
-    <th>time</th>
-    <th>horse</th>
-    <th>side</th>
-    <th>odds</th>
-    <th>price * stake</th>
-    <th>profit</th>
-  </tr>
-  {#if filteredResults.length === 0}
+  <thead>
     <tr>
-      <td colspan="6">no settled bets</td>
+      <th>time</th>
+      <th>horse</th>
+      <th>side</th>
+      <th>odds</th>
+      <th>price * stake</th>
+      <th>profit</th>
     </tr>
-  {/if}
-  {#each filteredResults.slice(0, range) as { time, selection, side, price, liability, profit }, i}
-    {#if i != range - 1}
-      {#if isNewDay(time)}
-        <tr class="day">
-          <td colspan="6">{time.substring(0, 10)}</td>
-        </tr>
-      {/if}
+  </thead>
+  <tbody>
+    {#if filteredResults.length === 0}
       <tr>
-        <td class="time">{time.length > 5 ? time.split("/")[3] : time}</td>
-        <td class="selection">{selection}</td>
-        <td class="side">{side}</td>
-        <td
-          class="odds"
-          style="background-color: rgba({calculateRed(price)}, 
-            {calculateGreen(price)}, 1, 0.4)">{Math.floor(price)}</td
-        >
-        <td class="price">£{twoDP(liability)}</td>
-        {#if profit < 0}
-          <td class="price" style="background-color: rgba(240, 1, 1, 0.3)"
-            >£{profit}</td
-          >
-        {:else}
-          <td class="price" style="background-color: rgba(1, 240, 1, 0.3)"
-            >£{profit}</td
-          >
-        {/if}
+        <td colspan="6">no settled bets</td>
       </tr>
-    {:else}
-      <td colspan="6" id="more">
-        <button on:click={() => (range += 500)}>more</button>
-      </td>
     {/if}
-  {/each}
+    {#each filteredResults.slice(0, range) as { time, selection, side, price, liability, profit }, i}
+      {#if i != range - 1}
+        {#if isNewDay(time)}
+          <tr class="day">
+            <td colspan="6">{time.substring(0, 10)}</td>
+          </tr>
+        {/if}
+        <tr>
+          <td class="time">{time.length > 5 ? time.split("/")[3] : time}</td>
+          <td class="selection">{selection}</td>
+          <td class="side">{side}</td>
+          <td
+            class="odds"
+            style="background-color: rgba({calculateRed(price)}, 
+            {calculateGreen(price)}, 1, 0.4)">{Math.floor(price)}</td
+          >
+          <td class="price">£{twoDP(liability)}</td>
+          {#if profit < 0}
+            <td class="price" style="background-color: rgba(240, 1, 1, 0.3)"
+              >£{profit}</td
+            >
+          {:else}
+            <td class="price" style="background-color: rgba(1, 240, 1, 0.3)"
+              >£{profit}</td
+            >
+          {/if}
+        </tr>
+      {:else}
+        <td colspan="6" id="more">
+          <button on:click={() => (range += 500)}>more</button>
+        </td>
+      {/if}
+    {/each}
+  </tbody>
 </table>
 
 <style>

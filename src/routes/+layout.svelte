@@ -29,13 +29,15 @@
 
 <style>
   header {
-    margin-block: 1.5rem;
-    margin-inline: 1.5rem;
+    position: sticky;
+    top: 0;
     display: flex;
     align-items: center;
     gap: 2rem;
+    padding-block: 1.5rem;
+    padding-inline: 1.5rem;
     z-index: 99;
-    position: relative;
+    background-color: rgb(36, 36, 36);
   }
 
   a {
