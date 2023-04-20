@@ -13,7 +13,7 @@
   <button on:click={() => (toggle = !toggle)}> 🔽 </button>
   {#if toggle}
     <ul>
-      <a href="/woman" on:click={hide}> WOMAN </a>
+      <a href="/woman" on:click={hide}> STRIP </a>
       <a href="/graph" on:click={hide}> GRAPH </a>
       <a href="/history" on:click={hide}> HISTORY </a>
       <a href="/dev" on:click={hide}> DEV </a>
