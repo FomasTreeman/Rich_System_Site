@@ -2,12 +2,9 @@
   // import { onMount } from "svelte";
   import Table from "../Table.svelte";
 
-  let toggleA = false;
-
   export let data;
 
-  let todaysProfit = 0;
-  let totalLiability = 0;
+  let toggleA = false;
 
   function twoDP(num, comma = true) {
     const two = Math.floor(num * 100) / 100;
@@ -21,6 +18,43 @@
       .map((profit) => (acc += profit));
     return kitty;
   }
+
+  function atl() {
+    const allTime = data.history.history.reduce((acc, curr) => {
+      if (curr.side == "BACK") return acc + curr.liability / curr.price;
+      if (curr.side == "LAY") return acc + curr.liability;
+    }, 0);
+    return allTime;
+  }
+
+  function getStreaks() {
+    let streaks = [];
+    let index = 0;
+    data.history.history.forEach((bet) => {
+      if (bet.side === "BACK") return;
+      if (bet.profit > 0) {
+        if (!streaks[index]) streaks[index] = 0;
+        streaks[index] += 1;
+      } else {
+        if (!streaks[index]) return;
+        index += 1;
+      }
+    });
+    return streaks;
+  }
+
+  function avgStreak() {
+    const streaks = getStreaks();
+    return Math.floor(streaks.reduce((a, b) => a + b, 0) / streaks.length);
+  }
+
+  $: monthlyAVG =
+    Object.values(data.history.monthly).reduce((a, b) => a + b, 0) /
+    Object.keys(data.history.monthly).length;
+
+  $: dailyAVG =
+    Object.values(data.history.daily).reduce((a, b) => a + b, 0) /
+    Object.keys(data.history.daily).length;
 
   $: totalLiability = data.activity.settled.reduce((acc, curr) => {
     return acc + curr.liability;
@@ -88,6 +122,14 @@
       <p>races today</p>
       <h3>{data.activity.totalRaces}</h3>
     </li>
+    <li class="general">
+      <p>🔥</p>
+      <h3>{avgStreak()}</h3>
+    </li>
+    <li class="general">
+      <p>losses (lay)</p>
+      <h3>{getStreaks().length - 1}</h3>
+    </li>
     <li class="trophies">
       <p>🏆</p>
       <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
@@ -96,11 +138,6 @@
       <p>🏆 range</p>
       <h3>£{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}</h3>
     </li>
-    <li class="return">
-      <p>profit</p>
-      <h3>£{twoDP(data.activity.funds - 840)}</h3>
-    </li>
-
     <li class="lia">
       <p>todays avg liability</p>
       <h3>
@@ -108,8 +145,9 @@
           data.activity.settled.reduce(
             (acc, curr) => (curr.side == "LAY" ? acc + curr.liability : acc),
             0
-          ) / data.activity.settled.filter((bet) => bet.side == "LAY").length
-        ) || 0}
+          ) / data.activity.settled.filter((bet) => bet.side == "LAY").length ||
+            0
+        )}
       </h3>
     </li>
     <li class="lia">
@@ -117,6 +155,28 @@
       <h3>
         £{twoDP(totalLiability)}
       </h3>
+    </li>
+    <li class="lia">
+      <p>overall liability</p>
+      <h3>£{twoDP(atl())}</h3>
+    </li>
+    <li class="return">
+      <p>profit</p>
+      <h3>£{twoDP(data.activity.funds - 840)}</h3>
+    </li>
+
+    <li class="return">
+      <p>ROI</p>
+      <h3>
+        %{((Math.floor(data.activity.funds - 840) / atl()) * 100)
+          .toString()
+          .substring(0, 6)}
+      </h3>
+    </li>
+    <li class="special return">
+      <p>weekly: £🧑‍💻</p>
+      <p>monthly: £{twoDP(monthlyAVG)}</p>
+      <p>daily: £{twoDP(dailyAVG)}</p>
     </li>
   </section>
   <!-- <section>

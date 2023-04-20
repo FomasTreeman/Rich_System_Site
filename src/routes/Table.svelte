@@ -71,18 +71,23 @@
         </tr>
       {/if}
       <tr>
-        <td>{time.length > 5 ? time.split("/")[2] : time}</td>
-        <td>{selection}</td>
-        <td>{side}</td>
+        <td class="time">{time.length > 5 ? time.split("/")[3] : time}</td>
+        <td class="selection">{selection}</td>
+        <td class="side">{side}</td>
         <td
+          class="odds"
           style="background-color: rgba({calculateRed(price)}, 
-            {calculateGreen(price)}, 1, 0.4)">{price}</td
+            {calculateGreen(price)}, 1, 0.4)">{Math.floor(price)}</td
         >
-        <td>£{twoDP(liability)}</td>
+        <td class="price">£{twoDP(liability)}</td>
         {#if profit < 0}
-          <td style="background-color: rgba(240, 1, 1, 0.3)">£{profit}</td>
+          <td class="price" style="background-color: rgba(240, 1, 1, 0.3)"
+            >£{profit}</td
+          >
         {:else}
-          <td style="background-color: rgba(1, 240, 1, 0.3)">£{profit}</td>
+          <td class="price" style="background-color: rgba(1, 240, 1, 0.3)"
+            >£{profit}</td
+          >
         {/if}
       </tr>
     {:else}
@@ -94,6 +99,31 @@
 </table>
 
 <style>
+  table {
+    width: 100%;
+    table-layout: auto;
+  }
+  th,
+  tr {
+    font-size: small;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid rgb(43, 43, 43);
+    border-collapse: collapse;
+  }
+
+  td.time,
+  td.side {
+    text-align: center;
+  }
+
+  td.selection {
+    max-width: 30%;
+    overflow-wrap: break-word;
+  }
   .day {
     text-align: center;
     background-color: grey;
