@@ -49,7 +49,9 @@
     Object.keys(data.history.daily).length;
 
   $: totalLiability = data.activity.settled.reduce((acc, curr) => {
-    return acc + curr.liability;
+    return curr.side == "LAY"
+      ? acc + curr.liability
+      : acc + curr.liability / curr.price;
   }, 0);
 
   $: todaysProfit = data.activity.settled.reduce((acc, curr) => {
