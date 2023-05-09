@@ -42,6 +42,7 @@
       filteredResults = results;
     }
   }
+  $: filteredResults = results;
 </script>
 
 <div>
