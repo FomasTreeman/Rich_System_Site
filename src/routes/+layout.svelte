@@ -1,10 +1,6 @@
 <script>
   let toggle = false;
   export let data;
-
-  function hide() {
-    toggle = false;
-  }
 </script>
 
 <header>
@@ -13,10 +9,9 @@
   <button on:click={() => (toggle = !toggle)}> 🔽 </button>
   {#if toggle}
     <ul>
-      <a href="/woman" on:click={hide}> CENSOR </a>
-      <a href="/graph" on:click={hide}> GRAPH </a>
-      <a href="/history" on:click={hide}> HISTORY </a>
-      <a href="/dev" on:click={hide}> DEV </a>
+      <a href="/graph" on:click={() => (toggle = false)}> GRAPH </a>
+      <a href="/history" on:click={() => (toggle = false)}> HISTORY </a>
+      <a href="/dev" on:click={() => (toggle = false)}> DEV </a>
     </ul>
   {/if}
   <div class="top-right">

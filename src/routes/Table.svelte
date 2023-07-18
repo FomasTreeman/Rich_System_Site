@@ -1,4 +1,6 @@
 <script>
+  import { twoDP } from '../lib/utils';
+
   export let results = [];
   let currentDay = '';
   let filteredResults = results;
@@ -16,11 +18,6 @@
     } else return 255;
   }
 
-  function twoDP(num, comma = true) {
-    const two = Math.floor(num * 100) / 100;
-    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
-  }
-
   function isNewDay(time) {
     if (time.length == 5) return false;
     if (currentDay == '') {
@@ -33,14 +30,10 @@
   }
 
   function filterResults(type) {
-    if (type === 'BACK') {
-      filteredResults = results.filter((result) => result.side === 'BACK');
-    } else if (type === 'LAY') {
-      filteredResults = results.filter((result) => result.side === 'LAY');
-    } else {
-      filteredResults = results;
-    }
+    const filteredBySide = results.filter((result) => result.side === type);
+    filteredResults = filteredBySide.length ? filteredBySide : results;
   }
+
   $: filteredResults = results;
 </script>
 
@@ -49,6 +42,7 @@
   <button on:click={() => filterResults('LAY')}> lay </button>
   <button on:click={() => filterResults('ALL')}> all </button>
 </div>
+<!-- table loading -->
 <table>
   <thead>
     <tr>
@@ -83,15 +77,7 @@
             {calculateGreen(price)}, 1, 0.4)">{Math.floor(price)}</td
           >
           <td class="price">£{twoDP(liability)}</td>
-          {#if profit < 0}
-            <td class="price" style="background-color: rgba(240, 1, 1, 0.3)"
-              >£{profit}</td
-            >
-          {:else}
-            <td class="price" style="background-color: rgba(1, 240, 1, 0.3)"
-              >£{profit}</td
-            >
-          {/if}
+          <td class="price {profit < 0 ? 'red' : 'green'}">£{profit}</td>
         </tr>
       {:else}
         <td colspan="6" id="more">
@@ -156,5 +142,12 @@
     margin-block: 2rem;
     border-radius: 4rem;
     width: 50%;
+  }
+
+  .red {
+    background-color: rgba(240, 1, 1, 0.3);
+  }
+  .green {
+    background-color: rgba(1, 240, 1, 0.3);
   }
 </style>

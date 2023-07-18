@@ -58,7 +58,7 @@
 </script>
 
 <section class="flex col">
-  {#each Object.entries(presets) as [preset, presetSettings]}
+  {#each Object.entries(presets) as [preset]}
     <li>
       <h2>{preset}</h2>
       <div class="flex">

@@ -21,7 +21,7 @@
   }
 
   onMount(async () => {
-    const res = await fetch(`${URL}/settings`);
+    const res = await fetch(`${import.meta.env.VITE_BOT_API_URL}/settings`);
     const { settings: newSettings } = await res.json();
     currentSettings = newSettings;
   });

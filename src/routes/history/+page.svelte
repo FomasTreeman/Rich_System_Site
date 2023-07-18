@@ -1,23 +1,22 @@
 <script>
-  import { noop } from "svelte/internal";
-  import Table from "../Table.svelte";
+  import Table from '../Table.svelte';
   export let data;
   let history = data.history.history;
-  let search = "";
+  let search = '';
   let searchPrice = 0;
   let searchLosses = false;
   let losses = 0;
 
   function filterNames() {
     history = data.history.history.filter((bet) => {
-      if (typeof bet.selection !== "string") return false;
+      if (typeof bet.selection !== 'string') return false;
       return bet.selection.toLowerCase().includes(search.toLowerCase());
     });
   }
 
   function filterOdds() {
     if (searchPrice < 20) return (history = data.history.history);
-    if (typeof searchPrice != "number") return;
+    if (typeof searchPrice != 'number') return;
     history = data.history.history.filter((bet) => {
       return bet.price <= searchPrice ? true : false;
     });
@@ -27,7 +26,7 @@
     console.log(searchLosses);
     if (searchLosses == true) return (history = data.history.history);
     history = data.history.history.filter((bet) => {
-      if (bet.side == "BACK") return false;
+      if (bet.side == 'BACK') return false;
       return Math.sign(bet.profit) === 1 ? false : true;
     });
   }
@@ -35,7 +34,7 @@
   function lossCount() {
     let count = 0;
     history.forEach((bet) => {
-      if (Math.sign(bet.profit) === 1 || bet.side == "BACK") return;
+      if (Math.sign(bet.profit) === 1 || bet.side == 'BACK') return;
       count++;
     });
     return count;

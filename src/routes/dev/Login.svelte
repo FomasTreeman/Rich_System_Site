@@ -1,6 +1,7 @@
 <script>
+  // doesnt utilise cookies but does set them
   import user from '../../user';
-  let currentError = null;
+  let currentError;
 
   const login = async (e) => {
     e.preventDefault();
@@ -30,6 +31,8 @@
       currentError = error;
     }
   };
+
+  $: console.log(currentError);
 </script>
 
 <form on:submit|preventDefault={login} class="flex col">

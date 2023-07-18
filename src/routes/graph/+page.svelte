@@ -1,5 +1,5 @@
 <script>
-  import Chart from "./Chart.svelte";
+  import Chart from './Chart.svelte';
 
   export let data;
   let graphType = xy;
@@ -25,7 +25,7 @@
 
   function dateToInt(date) {
     const number = parseInt(
-      date.split("-").reduce((acc, curr) => acc.concat(curr), "")
+      date.split('-').reduce((acc, curr) => acc.concat(curr), '')
     );
     return number;
   }
@@ -63,11 +63,23 @@
 <form on:submit={(e) => (type = filter(e, graphType))}>
   <div>
     <label for="from"> from</label>
-    <input type="date" id="from" value="2023-03-01" />
+    <input
+      type="date"
+      id="from"
+      value="2023-03-01"
+      min={new Date('2023-03-25').toISOString().split('T')[0]}
+      max={new Date().toISOString().split('T')[0]}
+    />
   </div>
   <div>
     <label for="to"> to</label>
-    <input type="date" id="to" value={new Date().toLocaleDateString("en-CA")} />
+    <input
+      type="date"
+      id="to"
+      value={new Date().toLocaleDateString('en-CA')}
+      min={new Date('2023-03-25').toISOString().split('T')[0]}
+      max={new Date().toISOString().split('T')[0]}
+    />
   </div>
   <button type="submit">Filter</button>
 </form>

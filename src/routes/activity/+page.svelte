@@ -1,20 +1,15 @@
 <script>
-  // import { onMount } from "svelte";
-  import Table from "../Table.svelte";
+  import Table from '../Table.svelte';
+  import { twoDP } from '../../lib/utils';
 
   export let data;
 
   let toggleA = false;
 
-  function twoDP(num, comma = true) {
-    const two = Math.floor(num * 100) / 100;
-    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
-  }
-
   function atl() {
     const allTime = data.history.history.reduce((acc, curr) => {
-      if (curr.side == "BACK") return acc + curr.liability / curr.price;
-      if (curr.side == "LAY") return acc + curr.liability;
+      if (curr.side == 'BACK') return acc + curr.liability / curr.price;
+      if (curr.side == 'LAY') return acc + curr.liability;
     }, 0);
     return allTime;
   }
@@ -23,11 +18,11 @@
     let streaks = [];
     let index = 0;
     data.history.history.forEach((bet) => {
-      if (bet.side === "BACK") return;
+      if (bet.side === 'BACK') return;
       if (bet.profit > 0) {
         if (!streaks[index]) streaks[index] = 0;
         streaks[index] += 1;
-  } else {
+      } else {
         if (!streaks[index]) return;
         index += 1;
       }
@@ -49,7 +44,7 @@
     Object.keys(data.history.daily).length;
 
   $: totalLiability = data.activity.settled.reduce((acc, curr) => {
-    return curr.side == "LAY"
+    return curr.side == 'LAY'
       ? acc + curr.liability
       : acc + curr.liability / curr.price;
   }, 0);
@@ -125,9 +120,9 @@
       <h3>
         £{twoDP(
           data.activity.settled.reduce(
-            (acc, curr) => (curr.side == "LAY" ? acc + curr.liability : acc),
+            (acc, curr) => (curr.side == 'LAY' ? acc + curr.liability : acc),
             0
-          ) / data.activity.settled.filter((bet) => bet.side == "LAY").length ||
+          ) / data.activity.settled.filter((bet) => bet.side == 'LAY').length ||
             0
         )}
       </h3>
