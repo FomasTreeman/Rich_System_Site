@@ -1,12 +1,11 @@
 <script>
   export let results = [];
-  let currentDay = "";
+  let currentDay = '';
   let filteredResults = results;
   let range = 200;
 
   function calculateRed(price) {
     if (price > 110) {
-      // return 10;
       return 255 - (Math.floor((price - 20) * (255 / 90)) - 255);
     } else return 255;
   }
@@ -19,25 +18,25 @@
 
   function twoDP(num, comma = true) {
     const two = Math.floor(num * 100) / 100;
-    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
   }
 
   function isNewDay(time) {
     if (time.length == 5) return false;
-    if (currentDay == "") {
-      currentDay = time.split("/")[2];
+    if (currentDay == '') {
+      currentDay = time.split('/')[2];
       return true;
-    } else if (time.split("/")[2] !== currentDay) {
-      currentDay = time.split("/")[2];
+    } else if (time.split('/')[2] !== currentDay) {
+      currentDay = time.split('/')[2];
       return true;
     } else return false;
   }
 
   function filterResults(type) {
-    if (type === "BACK") {
-      filteredResults = results.filter((result) => result.side === "BACK");
-    } else if (type === "LAY") {
-      filteredResults = results.filter((result) => result.side === "LAY");
+    if (type === 'BACK') {
+      filteredResults = results.filter((result) => result.side === 'BACK');
+    } else if (type === 'LAY') {
+      filteredResults = results.filter((result) => result.side === 'LAY');
     } else {
       filteredResults = results;
     }
@@ -46,9 +45,9 @@
 </script>
 
 <div>
-  <button on:click={() => filterResults("BACK")}> back </button>
-  <button on:click={() => filterResults("LAY")}> lay </button>
-  <button on:click={() => filterResults("ALL")}> all </button>
+  <button on:click={() => filterResults('BACK')}> back </button>
+  <button on:click={() => filterResults('LAY')}> lay </button>
+  <button on:click={() => filterResults('ALL')}> all </button>
 </div>
 <table>
   <thead>
@@ -75,7 +74,7 @@
           </tr>
         {/if}
         <tr>
-          <td class="time">{time.length > 5 ? time.split("/")[3] : time}</td>
+          <td class="time">{time.length > 5 ? time.split('/')[3] : time}</td>
           <td class="selection">{selection}</td>
           <td class="side">{side}</td>
           <td

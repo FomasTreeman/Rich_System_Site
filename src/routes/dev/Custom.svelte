@@ -1,14 +1,13 @@
 <script>
-  import { onMount } from "svelte";
-  import SettingsForm from "./SettingsForm.svelte";
+  import { onMount } from 'svelte';
+  import SettingsForm from './SettingsForm.svelte';
   let currentSettings = {};
-  export let URL;
 
   function postSettings(newSettings) {
-    fetch(`${URL}/settings`, {
-      method: "POST",
+    fetch(`${import.meta.env.VITE_BOT_API_URL}/settings`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(newSettings),
     })

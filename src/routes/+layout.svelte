@@ -13,7 +13,7 @@
   <button on:click={() => (toggle = !toggle)}> 🔽 </button>
   {#if toggle}
     <ul>
-      <a href="/woman" on:click={hide}> STRIP </a>
+      <a href="/woman" on:click={hide}> CENSOR </a>
       <a href="/graph" on:click={hide}> GRAPH </a>
       <a href="/history" on:click={hide}> HISTORY </a>
       <a href="/dev" on:click={hide}> DEV </a>
@@ -21,7 +21,7 @@
   {/if}
   <div class="top-right">
     <p>next race</p>
-    <b>{data.activity.next}</b>
+    <b>{data?.activity.next}</b>
   </div>
 </header>
 

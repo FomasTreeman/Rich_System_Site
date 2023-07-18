@@ -1,9 +1,15 @@
 <script>
+  import { onMount } from 'svelte';
+
   export let data;
+
+  onMount(() => {
+    console.log(import.meta.env.VITE_BOT_API_URL);
+  });
 
   function getDailyKitty() {
     let acc = 840;
-    const kitty = Object.values(data.history.daily)
+    const kitty = Object.values(data?.history.daily)
       .reverse()
       .map((profit) => (acc += profit));
     return kitty;
@@ -11,16 +17,16 @@
 
   function twoDP(num) {
     const two = Math.floor(num * 100) / 100;
-    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    return two.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',');
   }
 </script>
 
 <main>
-  <h1>£{twoDP(data.activity.funds)}</h1>
+  <h1>£{twoDP(data?.activity.funds)}</h1>
   <section>
     <li
       style="background-color: {Math.sign(
-        data.activity.settled.reduce(
+        data?.activity.settled.reduce(
           (acc, curr) => (curr.side == 'LAY' ? (acc += curr.profit) : acc),
           0
         )
@@ -31,8 +37,8 @@
       <p>LAY</p>
       <h3>
         £{twoDP(
-          data.activity.settled.reduce(
-            (acc, curr) => (curr.side == "LAY" ? (acc += curr.profit) : acc),
+          data?.activity.settled.reduce(
+            (acc, curr) => (curr.side == 'LAY' ? (acc += curr.profit) : acc),
             0
           )
         )}
@@ -40,7 +46,7 @@
     </li>
     <li
       style="background-color: {Math.sign(
-        data.activity.settled.reduce(
+        data?.activity.settled.reduce(
           (acc, curr) => (curr.side == 'BACK' ? (acc += curr.profit) : acc),
           0
         )
@@ -51,8 +57,8 @@
       <p>BACK</p>
       <h3>
         £{twoDP(
-          data.activity.settled.reduce(
-            (acc, curr) => (curr.side == "BACK" ? (acc += curr.profit) : acc),
+          data?.activity.settled.reduce(
+            (acc, curr) => (curr.side == 'BACK' ? (acc += curr.profit) : acc),
             0
           )
         )}
@@ -62,7 +68,7 @@
   <li class="trophies">
     <p>🏆</p>
     <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
-    <p>£{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}</p>
+    <p>£{twoDP(data?.activity.funds - Math.max(...getDailyKitty()))}</p>
   </li>
   <img
     src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
@@ -104,8 +110,8 @@
   /* 
   li:first-child {
     background-color: rgba(0, 128, 0, 0.56);
-  }
 
+  }
   li:last-child {
     background-color: rgba(255, 0, 0, 0.586);
   } */

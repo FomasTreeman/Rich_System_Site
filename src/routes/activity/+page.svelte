@@ -27,7 +27,7 @@
       if (bet.profit > 0) {
         if (!streaks[index]) streaks[index] = 0;
         streaks[index] += 1;
-      } else {
+  } else {
         if (!streaks[index]) return;
         index += 1;
       }

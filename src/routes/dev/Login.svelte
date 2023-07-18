@@ -1,15 +1,14 @@
 <script>
-  import user from "../../user";
+  import user from '../../user';
   let currentError = null;
-  export let URL;
 
   const login = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`${URL}/login`, {
-        method: "POST",
+      await fetch(`${import.meta.env.VITE_BOT_API_URL}/login`, {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           username: e.target.username.value,
@@ -24,7 +23,7 @@
           } else {
             user.set(data.username);
             document.cookie = `sessionToken=${data.sessionToken}`;
-            console.log("logged in: ", data.username, data.sessionToken);
+            console.log('logged in: ', data.username, data.sessionToken);
           }
         });
     } catch (error) {

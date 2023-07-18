@@ -1,16 +1,15 @@
 <script>
-  import { onMount } from "svelte";
+  import { onMount } from 'svelte';
 
   let versions = [];
-  export let URL;
 
   function dispatch(message) {
     console.log(message);
     if (!confirm(`Are you sure you want to deploy ${message}?`)) return;
-    fetch(URL + "/git/dispatch", {
-      method: "POST",
+    fetch(import.meta.env.VITE_BOT_API_URL + '/git/dispatch', {
+      method: 'POST',
       headers: {
-        "Content-Type": "text/plain",
+        'Content-Type': 'text/plain',
       },
       body: message,
     });
@@ -18,8 +17,8 @@
 
   onMount(async () => {
     const [branchRes, tagRes] = await Promise.all([
-      fetch(URL + "/git/branches"),
-      fetch(URL + "/git/tags"),
+      fetch(import.meta.env.VITE_BOT_API_URL + '/git/branches'),
+      fetch(import.meta.env.VITE_BOT_API_URL + '/git/tags'),
     ]);
     const [tagJson, branchJson] = await Promise.all([
       tagRes.json(),

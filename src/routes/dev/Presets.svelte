@@ -1,18 +1,17 @@
 <script>
-  import { onMount } from "svelte";
-  import SettingsForm from "./SettingsForm.svelte";
+  import { onMount } from 'svelte';
+  import SettingsForm from './SettingsForm.svelte';
 
   let presets = {};
   let settings = {};
   let showForm = false;
-  let newPresetName = "";
-  export let URL;
+  let newPresetName = '';
 
   function post(params, body = null) {
-    fetch(`${URL}/settings/${params}`, {
-      method: "POST",
+    fetch(`${import.meta.env.VITE_BOT_API_URL}/settings/${params}`, {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: body,
     })
@@ -43,14 +42,14 @@
   }
 
   function submit(action, preset, newPresetSettings = null) {
-    if (action == "load") loadPreset(preset);
-    if (action == "create") createPreset(preset, newPresetSettings);
+    if (action == 'load') loadPreset(preset);
+    if (action == 'create') createPreset(preset, newPresetSettings);
   }
 
   $: console.log(presets);
 
   onMount(async () => {
-    const res = await fetch(`${URL}/settings`);
+    const res = await fetch(`${import.meta.env.VITE_BOT_API_URL}/settings`);
     const { settings: newSettings, presets: newPresets } = await res.json();
     console.log(newPresets, newSettings);
     presets = newPresets;
@@ -64,7 +63,7 @@
       <h2>{preset}</h2>
       <div class="flex">
         <button> show settings </button>
-        <button on:submit={() => submit("load", "preset1")}>
+        <button on:submit={() => submit('load', 'preset1')}>
           load preset
         </button>
       </div>
@@ -79,7 +78,7 @@
 {#if showForm}
   <SettingsForm
     {settings}
-    on:submit={(e) => submit("create", newPresetName, e.detail)}
+    on:submit={(e) => submit('create', newPresetName, e.detail)}
   />
 {/if}
 
