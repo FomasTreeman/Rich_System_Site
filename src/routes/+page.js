@@ -1,3 +1,5 @@
+export const ssr = false;
+
 export async function load({ fetch }) {
   console.log('🚴');
   console.time('load');
