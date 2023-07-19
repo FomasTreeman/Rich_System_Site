@@ -1,6 +1,6 @@
-export const ssr = false; // so vercel can load under 10 seconds have to make the fetch from the browser
-
 export async function load({ fetch }) {
+  console.log('🚴');
+  console.time('load');
   const [acResp, hisResp] = await Promise.all([
     fetch(`${import.meta.env.VITE_BOT_API_URL}/activity`),
     fetch(`${import.meta.env.VITE_BOT_API_URL}/history`),
@@ -12,7 +12,11 @@ export async function load({ fetch }) {
   //   fetch(`asdasd/history`),
   // ]);
 
-  if (acResp.status !== 200 || hisResp.status !== 200) return;
+  if (acResp.status !== 200 || hisResp.status !== 200) {
+    console.log('error');
+    console.timeEnd('load');
+    return;
+  }
 
   const [activity, history] = await Promise.all([
     acResp.json(),
@@ -46,5 +50,6 @@ export async function load({ fetch }) {
   history['monthly'] = monthly;
   history['daily'] = daily;
 
+  console.timeEnd('load');
   return { activity, history };
 }

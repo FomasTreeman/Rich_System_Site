@@ -20,32 +20,39 @@
 </script>
 
 <main>
-  <h1>£{twoDP(data.activity.funds)}</h1>
-  <section>
-    <li class={Math.sign(total('LAY')) == -1 ? 'red' : 'green'}>
-      <p>LAY</p>
-      <h3>
-        £{twoDP(total('LAY'))}
-      </h3>
+  {#if data?.activity}
+    <h1>£{twoDP(data.activity.funds)}</h1>
+    <section>
+      <li class={Math.sign(total('LAY')) == -1 ? 'red' : 'green'}>
+        <p>LAY</p>
+        <h3>
+          £{twoDP(total('LAY'))}
+        </h3>
+      </li>
+      <li class={Math.sign(total('BACK')) == -1 ? 'red' : 'green'}>
+        <p>BACK</p>
+        <h3>
+          £{twoDP(total('BACK'))}
+        </h3>
+      </li>
+    </section>
+    <li class="trophies">
+      <p>🏆</p>
+      <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
+      <p>
+        £{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}
+      </p>
     </li>
-    <li class={Math.sign(total('BACK')) == -1 ? 'red' : 'green'}>
-      <p>BACK</p>
-      <h3>
-        £{twoDP(total('BACK'))}
-      </h3>
-    </li>
-  </section>
-  <li class="trophies">
-    <p>🏆</p>
-    <h3>£{twoDP(Math.max(...getDailyKitty()))}</h3>
-    <p>
-      £{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}
-    </p>
-  </li>
-  <img
-    src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
-    alt="making money gif with looney tunes"
-  />
+    <img
+      src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
+      alt="making money gif with looney tunes"
+    />
+  {:else}
+    <img
+      src="https://media4.giphy.com/media/3o7bu3XilJ5BOiSGic/200.gif"
+      alt="loading"
+    />
+  {/if}
 </main>
 
 <style>
