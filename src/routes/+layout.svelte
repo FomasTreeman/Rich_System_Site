@@ -1,6 +1,7 @@
 <script>
   let toggle = false;
-  import { page } from '$app/stores';
+
+  export let data;
 </script>
 
 <header>
@@ -16,7 +17,7 @@
   {/if}
   <div class="top-right">
     <p>next race</p>
-    <b>{$page.data?.activity?.next || '⏳'}</b>
+    <b>{data?.activity?.next || '⏳'}</b>
   </div>
 </header>
 
