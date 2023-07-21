@@ -25,6 +25,18 @@ export async function load({ fetch }) {
     hisResp.json(),
   ]);
 
+  /**
+   *
+   * @param {Object} results
+   * @param {Object[]} results.history
+   * @param {string} results.history.time
+   * @param {string} results.history.selection
+   * @param {string} results.history.side
+   * @param {number} results.history.price
+   * @param {number} results.history.liability
+   * @param {number} results.history.profit
+   * @returns {Object} { monthly, daily }
+   */
   function averages(results) {
     let monthly = {};
     let daily = {};
