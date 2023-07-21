@@ -1,7 +1,9 @@
 <script>
+  import { onMount } from 'svelte';
   import { twoDP } from '../lib/utils';
 
   export let data;
+  let promise = getGIF();
 
   function getDailyKitty() {
     let acc = 840;
@@ -16,6 +18,17 @@
       (acc, curr) => (curr.side == side ? (acc += curr.profit) : acc),
       0
     );
+  }
+
+  async function getGIF() {
+    const URL = `https://api.giphy.com/v1/gifs/search?api_key=${
+      import.meta.env.VITE_GIPHY_API_KEY
+    }&q=money&offset=${Math.floor(Math.random() * 9 + 1)}&limit=1`;
+    console.log(URL);
+    const resp = await fetch(URL);
+    const json = await resp.json();
+    console.log('📙', json.data[0]);
+    return json.data[0].images.looping.mp4;
   }
 </script>
 
@@ -43,10 +56,11 @@
         £{twoDP(data.activity.funds - Math.max(...getDailyKitty()))}
       </p>
     </li>
-    <img
-      src={`/${Math.floor(Math.random() * 9 + 1)}.gif`}
-      alt="making money gif with looney tunes"
-    />
+    {#await promise}
+      <p>loading...</p>
+    {:then url}
+      <img src={url} alt="making money " />
+    {/await}
   {:else}
     <img
       src="https://media4.giphy.com/media/3o7bu3XilJ5BOiSGic/200.gif"
