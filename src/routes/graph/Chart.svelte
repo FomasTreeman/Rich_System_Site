@@ -1,6 +1,6 @@
 <script>
-  import { onMount } from "svelte";
-  import Chart from "chart.js/auto";
+  import { onMount } from 'svelte';
+  import Chart from 'chart.js/auto';
 
   export let type;
   let ctx;
@@ -37,16 +37,16 @@
 
   onMount(async () => {
     myChart = new Chart(ctx, {
-      type: "line",
+      type: 'line',
       data: {
         datasets: [
           {
-            label: "days",
+            label: 'days',
             data: type,
             borderWidth: 1,
           },
           {
-            label: "regression",
+            label: 'regression',
             pointRadius: 0,
           },
         ],
@@ -63,7 +63,7 @@
           y: {
             title: {
               display: true,
-              text: "Profit",
+              text: 'Profit',
             },
           },
         },

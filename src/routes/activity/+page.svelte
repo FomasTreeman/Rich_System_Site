@@ -4,10 +4,6 @@
 
   export let data;
 
-  if (data?.history || data?.activity) {
-    throw new Error('data not loaded');
-  }
-
   let toggleA = false;
 
   function atl() {
