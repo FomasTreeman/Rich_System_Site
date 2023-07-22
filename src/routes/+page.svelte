@@ -28,8 +28,10 @@
     const resp = await fetch(URL);
     const json = await resp.json();
     console.log('📙', json.data[0]);
-    return json.data[0].images.looping.mp4;
+    console.log('📙', json.data[0].images.original.url);
+    return json.data[0].images.original.url;
   }
+  $: console.log(promise);
 </script>
 
 <main>
