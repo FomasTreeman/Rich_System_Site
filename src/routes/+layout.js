@@ -1,7 +1,6 @@
 export const ssr = false;
 
 export async function load({ fetch }) {
-  console.log('🚴');
   console.time('load');
   const [acResp, hisResp] = await Promise.all([
     fetch(`${import.meta.env.VITE_BOT_API_URL}/activity`),

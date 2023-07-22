@@ -24,14 +24,10 @@
     const URL = `https://api.giphy.com/v1/gifs/search?api_key=${
       import.meta.env.VITE_GIPHY_API_KEY
     }&q=money&offset=${Math.floor(Math.random() * 9 + 1)}&limit=1`;
-    console.log(URL);
     const resp = await fetch(URL);
     const json = await resp.json();
-    console.log('📙', json.data[0]);
-    console.log('📙', json.data[0].images.original.url);
     return json.data[0].images.original.url;
   }
-  $: console.log(promise);
 </script>
 
 <main>
