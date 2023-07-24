@@ -57,7 +57,7 @@
     {#await promise}
       <p>loading...</p>
     {:then url}
-      <img src={url} alt="making money " />
+      <img src={url} alt="making money" />
     {/await}
   {:else}
     <img
@@ -116,6 +116,7 @@
   img {
     margin-block: 2rem;
     max-width: 50%;
+    max-height: 40%;
   }
 
   h1 {
