@@ -21,6 +21,7 @@
   }
 
   async function getGIF() {
+    console.log(import.meta.env.VITE_GIPHY_API_KEY);
     const URL = `https://api.giphy.com/v1/gifs/search?api_key=${
       import.meta.env.VITE_GIPHY_API_KEY
     }&q=money&offset=${Math.floor(Math.random() * 9 + 1)}&limit=1`;
